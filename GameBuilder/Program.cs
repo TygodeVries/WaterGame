@@ -18,10 +18,6 @@ namespace GameBuilder
 
     static void Main(string[] args)
         {
-
-            Console.ReadLine();
-
-
             if (InputManager.UseController)
             {
                 // Start controller thread
