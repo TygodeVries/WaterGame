@@ -18,6 +18,9 @@ namespace GameBuilder
 
     static void Main(string[] args)
         {
+            AssetLoading.LoadAssetsIfNotExist(AssetPath);
+
+
             if (InputManager.UseController)
             {
                 // Start controller thread
@@ -28,10 +31,6 @@ namespace GameBuilder
             RenderingEngine.Start();
 
             Console.WriteLine("");
-
-            Debug.SendDebugMessage("Loading assets from web...");
-            // TODO
-            Debug.SendDebugMessage("Unable to download files, using cache");
 
             ConsoleCommands.Start();
 
