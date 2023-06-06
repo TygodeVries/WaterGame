@@ -4,6 +4,9 @@ using GameBuilder.User;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Threading;
+using System.IO;
+using System.Diagnostics;
 
 namespace GameBuilder.Game
 {
@@ -24,9 +27,11 @@ namespace GameBuilder.Game
         public static void SendFatalErrorMessage(string message)
         {
             Console.BackgroundColor = ConsoleColor.DarkRed;
-            Console.WriteLine("[FATAL] " + message);
-            Console.WriteLine("Press enter to exit.");
-            Console.ReadLine();
+            Console.WriteLine();
+            Directory.CreateDirectory(Program.DataPath + "\\logs");
+            File.WriteAllLines(Program.DataPath + "\\logs\\latest.txt", new string[] { " -- Project Midnight has crashed. -- ","", "[FATAL] " + message, "", " --  Project Midnight has crashed. -- ", "", "This log has been saved to: " + Program.DataPath + "\\logs\\latest.txt" });
+            
+            Process.Start("notepad.exe", (Program.DataPath + "\\logs\\latest.txt"));
             Environment.Exit(0);
         }
 

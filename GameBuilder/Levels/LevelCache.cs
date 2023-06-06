@@ -20,7 +20,16 @@ namespace GameBuilder.Levels
                 return keysMapping[path];
             }
 
-            string[] s = File.ReadAllText(path).Trim().Split('\n');
+            string[] s = null;
+
+            try
+            {
+                s = File.ReadAllText(path).Trim().Split('\n');
+            } catch(Exception e)
+            {
+                Game.Debug.SendFatalErrorMessage("Error loading data at: " + path + ", " + e + "\n\n Files corrupt or missing?");
+                return null;
+            }
             keysMapping.Add(path, s);
             return s;
         }

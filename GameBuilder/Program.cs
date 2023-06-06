@@ -12,9 +12,10 @@ namespace GameBuilder
     internal class Program
     {
         public static string AssetPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\.midnight\\assets";
+        public static string DataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\.midnight";
 
 
-      
+
 
     static void Main(string[] args)
         {
