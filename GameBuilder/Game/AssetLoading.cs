@@ -18,13 +18,19 @@ namespace GameBuilder.Game
 
             if(!Directory.Exists(path))
             {
-                Console.WriteLine("Assets not found, Downloading latest version.");
+                DateTime startTime = DateTime.Now;
+
+                Debug.SendDebugMessage("Assets not found, Downloading latest version from internet.");
+                Debug.SendDebugMessage("This might take some time!");
+
                 WebClient webClient = new WebClient();
                 string targetPath = Environment.GetFolderPath(Environment.SpecialFolder.InternetCache);
 
                 webClient.DownloadFile(DownloadURL, targetPath + "\\midnight.zip");
-                Console.WriteLine("Extracting data...");
+                Debug.SendDebugMessage("Extracting data from file \"" + targetPath + "\\midnight.zip\"");
                 ZipFile.ExtractToDirectory(targetPath + "\\midnight.zip", path);
+
+                Debug.SendDebugMessage("Completed asset download in: " + DateTime.Now.Subtract(startTime).TotalMilliseconds + "ms");
             }
         }
     }

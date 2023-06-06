@@ -7,22 +7,28 @@ using System.Windows.Forms;
 using System.Threading;
 using System.IO;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace GameBuilder.Game
 {
     internal class Debug
     {
+        static List<string> log = new List<string>();
 
         public static bool DebugmodeIsOn = true;
 
         public static void SendDebugMessage(string message)
         {
-            Console.WriteLine("[DEBUG] " + message);
+            string msg = DateTime.Now.ToShortTimeString() + " : [DEBUG] " + message;
+            Console.WriteLine(msg);
+            log.Add(msg);
         }
 
         public static void SendErrorMessage(string message)
         {
-            Console.WriteLine("[ERROR] " + message);
+            string msg = DateTime.Now.ToShortTimeString() + " : [ERROR] " + message;
+            Console.WriteLine(msg);
+            log.Add(msg);
         }
         public static void SendFatalErrorMessage(string message)
         {
@@ -33,6 +39,11 @@ namespace GameBuilder.Game
             
             Process.Start("notepad.exe", (Program.DataPath + "\\logs\\latest.txt"));
             Environment.Exit(0);
+        }
+
+        static void saveLog()
+        {
+
         }
 
         public static void Tick()

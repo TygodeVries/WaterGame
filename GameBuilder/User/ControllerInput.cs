@@ -21,8 +21,6 @@ namespace GameBuilder.User
 
         public static void LookForControllers()
         {
-            Debug.SendDebugMessage("Looking for controller...");
-
             // Initialize XInput
             var controllers = new[] { new Controller(UserIndex.One), new Controller(UserIndex.Two), new Controller(UserIndex.Three), new Controller(UserIndex.Four) };
 
