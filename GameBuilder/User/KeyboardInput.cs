@@ -10,8 +10,6 @@ namespace GameBuilder.User
 
         public static bool GetKey(Keys key)
         {
-
-
             if (GetAsyncKeyState((int)key) > 0)
             {
                 return true;

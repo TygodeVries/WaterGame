@@ -3,7 +3,7 @@ using GameBuilder.Game;
 using GameBuilder.Levels;
 using GameBuilder.Rendering;
 using GameBuilder.User;
-using GameBuilder.Water;
+using GameBuilder.Particle;
 using System;
 using System.Drawing;
 
@@ -36,12 +36,12 @@ namespace GameBuilder.Scripts
         {
             Nozzel.Tick();
 
-            if (InputManager.GetKeyDown("Jump") && rigidBody.onGround)
+            if (InputManager.leftStick.y == 1 && rigidBody.onGround)
             {
                 rigidBody.velocity.y = -2.3f;
             }
 
-            if (InputManager.GetKey("Jump") && rigidBody.velocity.y < 0)
+            if (InputManager.leftStick.y == 1 && rigidBody.velocity.y < 0)
             {
                 rigidBody.Weight = 6;
             }
@@ -50,17 +50,12 @@ namespace GameBuilder.Scripts
                 rigidBody.Weight = 12;
             }
 
-            if (InputManager.GetKey("FastFall"))
-            {
-                rigidBody.Weight += 3;
-            }
-
-            if (InputManager.GetKey("Left"))
+            if (InputManager.leftStick.x == -1)
             {
                 if(rigidBody.velocity.x > -1) rigidBody.velocity.x -= Time.DeltaTime * 4;
             }
 
-            else if (InputManager.GetKey("Right"))
+            else if (InputManager.leftStick.x == 1)
             {
                 if (rigidBody.velocity.x < 1) rigidBody.velocity.x += Time.DeltaTime * 4;
             }

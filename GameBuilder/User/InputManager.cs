@@ -1,4 +1,5 @@
-﻿using GameBuilder.Game;
+﻿using GameBuilder._Math;
+using GameBuilder.Game;
 using GameBuilder.Rendering;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
@@ -10,143 +11,43 @@ namespace GameBuilder.User
 {
     internal class InputManager
     {
-        public static bool UseController { get; } = true;
+        public static bool usingController = false;
 
-        static Dictionary<string, bool> lastFrameStatus = new Dictionary<string, bool>();
+        public static Vector rightStick = new Vector(0, 0);
+        public static Vector leftStick = new Vector(0, 0);
 
 
-        public static bool GetKey(string button)
+        public static void Tick()
         {
-            if (button == "Jump" && JumpButtonDown())
-            {
-                return true;
-            }
-            if(button == "Left" && LeftButtonDown())
-            {
-                return true;
-            }
-            if (button == "Right" && RightButtonDown())
-            {
-                return true;
-            }
-            if (button == "FastFall" && DownButtonDown())
-            {
-                return true;
-            }
-
-            return false;
+            if (usingController) controller();
+            else keyBoard();
         }
 
-        public static bool GetKeyDown(string button)
+        static void controller()
         {
-            if (!GetKey(button))
-            {
-                if (!lastFrameStatus.ContainsKey(button))
-                {
-                    lastFrameStatus.Add(button, false);
-                }
-
-                lastFrameStatus[button] = false;
-
-                return false;
-            }
-
-            if (!lastFrameStatus.ContainsKey(button))
-            {
-                lastFrameStatus.Add(button, true);
-                return true;
-            }
-
-
-            if(lastFrameStatus[button] == true)
-            {
-                return false;
-            }
-            else
-            {
-                lastFrameStatus[button] = true;
-                return true;
-            }
+            rightStick = new Vector(ControllerInput.JoystickRightX, ControllerInput.JoystickRightY);
+            leftStick = new Vector(ControllerInput.JoystickLeftX, ControllerInput.JoystickLeftY);
         }
 
-        private static bool DownButtonDown()
+        static void keyBoard()
         {
-            if (UseController)
-            {
-                if (ControllerInput.JoystickLeftY > 0.25f)
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                if (KeyboardInput.GetKey(Keys.S))
-                {
-                    return true;
-                }
-            }
+            if (KeyboardInput.GetKey(Keys.L)) rightStick.x = 1;
+            else if (KeyboardInput.GetKey(Keys.J)) rightStick.x = -1;
+            else rightStick.x = 0;
 
-            return false;
+            if (KeyboardInput.GetKey(Keys.I)) rightStick.y = 1;
+            else if (KeyboardInput.GetKey(Keys.K)) rightStick.y = -1;
+            else rightStick.y = 0;
+
+            if (KeyboardInput.GetKey(Keys.D)) leftStick.x = 1;
+            else if (KeyboardInput.GetKey(Keys.A)) leftStick.x = -1;
+            else leftStick.x = 0;
+
+            if (KeyboardInput.GetKey(Keys.W)) leftStick.y = 1;
+            else if (KeyboardInput.GetKey(Keys.S)) leftStick.y = -1;
+            else leftStick.y = 0;
+
         }
-
-        private static bool RightButtonDown()
-        {
-            if (UseController)
-            {
-                if (ControllerInput.JoystickLeftX > 0.25f)
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                if (KeyboardInput.GetKey(Keys.D))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private static bool LeftButtonDown()
-        {
-            if (UseController)
-            {
-                if (ControllerInput.JoystickLeftX < -0.25f)
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                if (KeyboardInput.GetKey(Keys.A))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private static bool JumpButtonDown()
-        {
-            if (UseController)
-            {
-                if (ControllerInput.A)
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                if (KeyboardInput.GetKey(Keys.W))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
+        
     }
 }

@@ -1,5 +1,6 @@
 ﻿using GameBuilder._Math;
 using GameBuilder.Game;
+using GameBuilder.Particle;
 using GameBuilder.Physics;
 using GameBuilder.Rendering;
 using GameBuilder.Scripts;
@@ -31,6 +32,14 @@ namespace GameBuilder.Levels
 
             PhysicsEngine.AddCollider(collider);
         }
+        public static void LoadFireAt(int x, int y)
+        {
+            GameObject o = new GameObject();
+            o.scripts.Add(new FireEmiter());
+            o.posistion = new Vector(x * 16, y * 16);
+            o.inizilize();
+        }
+
         public static void LoadNpcAt(int x, int y, string version)
         {
             GameObject o = new GameObject();

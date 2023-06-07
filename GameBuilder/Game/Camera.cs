@@ -24,17 +24,6 @@ namespace GameBuilder.Game
 
         public static void tick()
         {
-            if(currectCameraState == state.debug)
-            {
-                if (InputManager.GetKey("Right")) RenderingEngine.CameraX += 1;
-                if (InputManager.GetKey("Left")) RenderingEngine.CameraX -= 1;
-
-                if (InputManager.GetKey("FastFall")) RenderingEngine.CameraY += 1;
-                if (InputManager.GetKey("Jump")) RenderingEngine.CameraY -= 1;
-
-                Debug.SendDebugMessage("cam pos: " + RenderingEngine.CameraX + ", " + RenderingEngine.CameraY);
-            }
-
             if (currectCameraState == state.follow)
             {
                 // Send posistion update to renderer.

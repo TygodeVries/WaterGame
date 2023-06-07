@@ -3,7 +3,7 @@ using GameBuilder.Game;
 using GameBuilder.Physics;
 using GameBuilder.Rendering;
 using GameBuilder.Scripts;
-using GameBuilder.Water;
+using GameBuilder.Particle;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -15,6 +15,7 @@ namespace GameBuilder.Levels
         public static void Destroy(GameObject obj)
         {
             RenderingEngine.CurrentLoadedLevel.Objects.Remove(obj);
+            RenderingEngine.CurrentLoadedLevel.Particles.Remove(obj);
             obj.posistion = new Vector(10000, 10000);
         }
 
@@ -35,12 +36,6 @@ namespace GameBuilder.Levels
         public string name = "";
 
         public Vector renderingOffset = new Vector();
-
-
-        public void Destroy()
-        {
-            // Handle Destoring object?
-        }
 
         public void TickLate()
         {
@@ -125,13 +120,15 @@ namespace GameBuilder.Levels
                     g.tick();
                 }
 
-                foreach (GameObject g in RenderingEngine.CurrentLoadedLevel.Particles)
+                for(int i = 0; i < RenderingEngine.CurrentLoadedLevel.Particles.Count; i++)
                 {
-                    g.tick();
+                    if(i < RenderingEngine.CurrentLoadedLevel.Particles.Count)
+                      RenderingEngine.CurrentLoadedLevel.Particles[i].tick();
                 }
+
             } catch(Exception e)
             {
-                Console.WriteLine("Lost Tick.");
+                Debug.SendFatalErrorMessage( "Something went wrong ticking gameobjects! " + e);
             }
         }
 

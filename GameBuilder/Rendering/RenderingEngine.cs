@@ -2,7 +2,7 @@
 using GameBuilder.Game;
 using GameBuilder.Levels;
 using GameBuilder.Scripts;
-using GameBuilder.Water;
+using GameBuilder.Particle;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -48,7 +48,7 @@ namespace GameBuilder.Rendering
                 if (!gameObject.IsVisible) continue;
                 if (gameObject.layer != i) continue;
 
-                if (gameObject.sprite == null)
+                if (gameObject.sprite == null || gameObject.sprite.image == null)
                 {
                     continue;
                 }
@@ -117,7 +117,7 @@ namespace GameBuilder.Rendering
             }
             catch (Exception e)
             {
-                Environment.Exit(0);
+                Debug.SendFatalErrorMessage(e +"");
             }
         }
 

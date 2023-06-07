@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameBuilder.Water
+namespace GameBuilder.Particle
 {
     internal class Nozzel
     {
@@ -24,7 +24,7 @@ namespace GameBuilder.Water
         {
             GameObject player = Main.playerController.gameObject;
             RigidBody playerBody = Main.playerController.rigidBody;
-            Vector direction = new Vector(ControllerInput.JoystickRightX, -ControllerInput.JoystickRightY);
+            Vector direction = new Vector(InputManager.rightStick.x, -InputManager.rightStick.y);
 
             SprayTime -= Time.DeltaTime;
 

@@ -21,6 +21,9 @@ namespace GameBuilder.User
 
         public static void LookForControllers()
         {
+            InputManager.usingController = false;
+
+
             // Initialize XInput
             var controllers = new[] { new Controller(UserIndex.One), new Controller(UserIndex.Two), new Controller(UserIndex.Three), new Controller(UserIndex.Four) };
 
@@ -40,6 +43,8 @@ namespace GameBuilder.User
                 Thread.Sleep(1000);
                 LookForControllers();
             }
+
+            InputManager.usingController = true;
 
             Vibration v = new Vibration();
             v.LeftMotorSpeed = 4000;

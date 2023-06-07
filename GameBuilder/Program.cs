@@ -17,26 +17,8 @@ namespace GameBuilder
 
 
 
-    static void Main(string[] args)
+        static void Main(string[] args)
         {
-            AssetLoading.LoadAssetsIfNotExist(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
-
-
-            if (InputManager.UseController)
-            {
-                // Start controller thread
-                Thread thr = new Thread(ControllerInput.LookForControllers);
-                thr.Start();
-            }
-
-            RenderingEngine.Start();
-
-            Console.WriteLine("");
-
-            ConsoleCommands.Start();
-
-            LevelLoading.LoadFromFile("test_level");
-
             Window.CreateWindow();
 
             Debug.SendDebugMessage("Waiting for window to start.");
@@ -45,6 +27,18 @@ namespace GameBuilder
             {
 
             }
+
+            AssetLoading.LoadAssetsIfNotExist(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+
+            // Start controller thread
+            Thread thr = new Thread(ControllerInput.LookForControllers);
+            thr.Start();
+
+            RenderingEngine.Start();
+            ConsoleCommands.Start();
+
+            LevelLoading.LoadFromFile("test_level");
+
 
             Debug.SendDebugMessage("Window has started.");
 
@@ -63,6 +57,8 @@ namespace GameBuilder
                 {
                     if (!LevelLoading.Loading)
                     {
+                        InputManager.Tick();
+
                         // Update Inputs
                         Time.Tick();
 

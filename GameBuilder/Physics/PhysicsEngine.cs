@@ -42,10 +42,22 @@ namespace GameBuilder.Physics
         // Physics tick is called once a frame
         public static void Tick()
         {
+            while(bodies.Count > 501)
+            {
+                GameObject.Destroy(bodies[1].gameObject);
+                bodies.RemoveAt(1);
+            }
+
             if (!LevelLoading.Loading && LoadingLastFrame)
             {
                 Time.Tick();
                 Time.Tick();
+                Time.Tick();
+
+                foreach (RigidBody rb in bodies)
+                {
+                    rb.velocity = new Vector(0, 0);
+                }
             }
 
             if (!LevelLoading.Loading)
@@ -74,10 +86,9 @@ namespace GameBuilder.Physics
         {
             for (int i = 0; i < bodies.Count; i++)
             {
-
                 UpdateBodyVelocity(bodies[i]);
                 bodies[i].gameObject.posistion = bodies[i].gameObject.posistion + (bodies[i].velocity * (Time.DeltaTime * 100));
-
+                UpdateBodyVelocity(bodies[i]);
             }
 
         }

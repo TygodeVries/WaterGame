@@ -30,7 +30,7 @@ namespace GameBuilder.Levels
                 foreach (GameObject g in gameObjects)
                 {
                     unloaded += 1;
-                    g.Destroy();
+                    GameObject.Destroy(g);
                 }
 
                 gameObjects.Clear();
@@ -115,6 +115,9 @@ namespace GameBuilder.Levels
             DateTime loadingStartTime = DateTime.Now;
             Camera.currectCameraState = Camera.state.off;
 
+            int playerX = 0;
+            int playerY = 0; 
+
             // Unloading
             UnloadActiveLevel();
 
@@ -178,6 +181,8 @@ namespace GameBuilder.Levels
                         {
                             Console.WriteLine("Loading player..");
                             ObjectLoader.LoadPlayerAt(x, y);
+                            playerX = x;
+                            playerY = y;
                         }
 
                         if(mapping._object == "bounce")
@@ -198,6 +203,8 @@ namespace GameBuilder.Levels
 
             Console.WriteLine("Finished loading in " + DateTime.Now.Subtract(loadingStartTime).TotalMilliseconds + "ms");
             Loading = false;
+
+            ObjectLoader.LoadFireAt(playerX + 2, playerY);
 
             return;
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Net;
 using System.IO.Compression;
-
+using System.Threading;
 namespace GameBuilder.Game
 {
     internal class AssetLoading

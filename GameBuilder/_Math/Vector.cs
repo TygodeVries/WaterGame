@@ -12,6 +12,11 @@ namespace GameBuilder._Math
 
         }
 
+        public Vector copy()
+        {
+            return new Vector(x,y);
+        }
+
         public float magnitude()
         {
             return (float) Math.Sqrt(x * x + y * y);
