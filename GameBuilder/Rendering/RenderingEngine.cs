@@ -13,18 +13,6 @@ using System.Runtime.InteropServices.ComTypes;
 
 namespace GameBuilder.Rendering
 {
-    class DebugPoint
-    {
-        public Vector pos;
-        public Color color;
-
-        public DebugPoint(Vector pos, Color color)
-        {
-            this.pos = pos;
-            this.color = color;
-        }
-    }
-
     internal class RenderingEngine
     {
         static int X = (int)Math.Round(16f * 1.4f);
@@ -39,7 +27,7 @@ namespace GameBuilder.Rendering
         public static void Start()
         {
             drawBrush = new SolidBrush(Color.Black);
-            drawFont = new Font("Arial", 6);
+            drawFont = new Font("Raster Fonts", 6);
         }
         static void RenderLayer(int i, Graphics graphics16)
         {
