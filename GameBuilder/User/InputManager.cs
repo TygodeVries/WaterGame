@@ -16,6 +16,8 @@ namespace GameBuilder.User
         public static Vector rightStick = new Vector(0, 0);
         public static Vector leftStick = new Vector(0, 0);
 
+        public static bool jumpButton;
+        public static bool sprayButton;
 
         public static void Tick()
         {
@@ -25,8 +27,35 @@ namespace GameBuilder.User
 
         static void controller()
         {
+            float deadzone = 0.3f;
+            sprayButton = ControllerInput.X;
+            jumpButton = ControllerInput.A;
+
+
             rightStick = new Vector(ControllerInput.JoystickRightX, ControllerInput.JoystickRightY);
+            if(rightStick.magnitude() > deadzone)
+            {
+                rightStick.normalize();
+                rightStick = rightStick.Round();
+                rightStick.normalize();
+            }
+            else
+            {
+                rightStick = new Vector(0, 0);
+            }
+
+
             leftStick = new Vector(ControllerInput.JoystickLeftX, ControllerInput.JoystickLeftY);
+            if (leftStick.magnitude() > deadzone)
+            {
+                leftStick.normalize();
+                leftStick = leftStick.Round();
+                leftStick.normalize();
+            }
+            else
+            {
+                leftStick = new Vector(0, 0);
+            }
         }
 
         static void keyBoard()
@@ -47,6 +76,8 @@ namespace GameBuilder.User
             else if (KeyboardInput.GetKey(Keys.S)) leftStick.y = -1;
             else leftStick.y = 0;
 
+            sprayButton = KeyboardInput.GetKey(Keys.LShiftKey);
+            jumpButton = KeyboardInput.GetKey(Keys.W);
         }
         
     }

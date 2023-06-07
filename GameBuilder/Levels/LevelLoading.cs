@@ -27,10 +27,10 @@ namespace GameBuilder.Levels
             {
                 List<GameObject> gameObjects = RenderingEngine.CurrentLoadedLevel.Objects;
                 
-                foreach (GameObject g in gameObjects)
+                for (int i = 0; i < gameObjects.Count; i++)
                 {
                     unloaded += 1;
-                    GameObject.Destroy(g);
+                    GameObject.Destroy(gameObjects[i]);
                 }
 
                 gameObjects.Clear();
@@ -204,7 +204,6 @@ namespace GameBuilder.Levels
             Console.WriteLine("Finished loading in " + DateTime.Now.Subtract(loadingStartTime).TotalMilliseconds + "ms");
             Loading = false;
 
-            ObjectLoader.LoadFireAt(playerX + 2, playerY);
 
             return;
         }

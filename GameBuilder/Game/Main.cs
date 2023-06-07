@@ -3,6 +3,7 @@ using GameBuilder.Physics;
 using GameBuilder.Scripts;
 using GameBuilder.Particle;
 using System;
+using GameBuilder._Math;
 
 namespace GameBuilder.Game
 {
@@ -18,15 +19,14 @@ namespace GameBuilder.Game
 
         }
 
-
-        static Random rng = new Random();
-
         public static void Update()
         {
             if (!paused)
             {
                 GameObject.TickGameObjects();
-                PhysicsEngine.Tick();
+
+                if(Time.FPS > 30) PhysicsEngine.Tick();
+                
                 GameObject.TickLateGameObjects();
                 if (DebugIsOn) Debug.Tick();
                 Camera.tick();

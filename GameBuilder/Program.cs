@@ -37,7 +37,7 @@ namespace GameBuilder
             RenderingEngine.Start();
             ConsoleCommands.Start();
 
-            LevelLoading.LoadFromFile("test_level");
+            LevelLoading.LoadFromFile("level_one");
 
 
             Debug.SendDebugMessage("Window has started.");

@@ -20,27 +20,25 @@ namespace GameBuilder.Particle
 
         static float SprayTime = 0;
 
+        public static float SprayTimeLeft = 99999;
+
         public static void Tick()
         {
             GameObject player = Main.playerController.gameObject;
-            RigidBody playerBody = Main.playerController.rigidBody;
-            Vector direction = new Vector(InputManager.rightStick.x, -InputManager.rightStick.y);
+            Vector direction = new Vector(InputManager.leftStick.x, -InputManager.leftStick.y);
 
             SprayTime -= Time.DeltaTime;
 
-            if (direction.magnitude() > 0.3 && !ShotLastFrame)
+            if (direction.magnitude() > 0.3 && SprayTimeLeft > 0)
             {
                 SprayTime = 0.2f;
-                ShotLastFrame = true;
-            }
-            else if (direction.magnitude() < 0.3)
-            {
-                ShotLastFrame = false;
             }
 
-            if (SprayTime >= 0)
+            if (SprayTime >= 0 && InputManager.sprayButton)
             {
                 direction.normalize();
+
+                SprayTime -= Time.DeltaTime;
 
                 Random rng = new Random();
 
@@ -53,7 +51,7 @@ namespace GameBuilder.Particle
                     SpawnParticle(origin, particleDirection);
                 }
 
-                playerBody.velocity += -direction / 10;
+               // playerBody.velocity += -direction / 10;
             }
             else if(direction.magnitude() < 0.3)
             {

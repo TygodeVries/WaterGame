@@ -69,7 +69,7 @@ namespace GameBuilder.Physics
 
                     if (PointInSpesificCollider(point.x, point.y, collider))
                     {
-                        if (body == Main.playerController.rigidBody) collider.onCollision();
+                        collider.onCollision();
                         if (!collider.isTrigger) return true;
                     }
                 }
@@ -81,7 +81,7 @@ namespace GameBuilder.Physics
 
                     if (PointInSpesificCollider(point.x, point.y, collider))
                     {
-                        if(body == Main.playerController.rigidBody) collider.onCollision();
+                        collider.onCollision();
                         if (!collider.isTrigger) return true;
                     }
                 }
@@ -93,7 +93,7 @@ namespace GameBuilder.Physics
 
                     if (PointInSpesificCollider(point.x, point.y, collider))
                     {
-                        if (body == Main.playerController.rigidBody) collider.onCollision();
+                        collider.onCollision();
                         if (!collider.isTrigger) return true;
                     }
                 }

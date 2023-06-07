@@ -36,12 +36,12 @@ namespace GameBuilder.Scripts
         {
             Nozzel.Tick();
 
-            if (InputManager.leftStick.y == 1 && rigidBody.onGround)
+            if (InputManager.jumpButton && rigidBody.onGround)
             {
                 rigidBody.velocity.y = -2.3f;
             }
 
-            if (InputManager.leftStick.y == 1 && rigidBody.velocity.y < 0)
+            if (InputManager.jumpButton&& rigidBody.velocity.y < 0)
             {
                 rigidBody.Weight = 6;
             }
@@ -50,12 +50,12 @@ namespace GameBuilder.Scripts
                 rigidBody.Weight = 12;
             }
 
-            if (InputManager.leftStick.x == -1)
+            if (InputManager.leftStick.x < -0.3 && !InputManager.sprayButton)
             {
                 if(rigidBody.velocity.x > -1) rigidBody.velocity.x -= Time.DeltaTime * 4;
             }
 
-            else if (InputManager.leftStick.x == 1)
+            else if (InputManager.leftStick.x > 0.3 && !InputManager.sprayButton)
             {
                 if (rigidBody.velocity.x < 1) rigidBody.velocity.x += Time.DeltaTime * 4;
             }

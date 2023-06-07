@@ -9,8 +9,6 @@ namespace GameBuilder.User
     {
 
         static Controller controller;
-
-
         public static void Rumble(float left, float right)
         {
             Vibration v = new Vibration();
@@ -60,45 +58,23 @@ namespace GameBuilder.User
                 controller.GetState(out state);
 
                 JoystickLeftX = (float) state.Gamepad.LeftThumbX / 32768f;
-                JoystickLeftY = (float)state.Gamepad.LeftThumbY / 32768f;
+                JoystickLeftY = (float) state.Gamepad.LeftThumbY / 32768f;
 
 
-                JoystickRightX = (float)state.Gamepad.RightThumbX/ 32768f;
+                JoystickRightX = (float)state.Gamepad.RightThumbX / 32768f;
                 JoystickRightY = (float)state.Gamepad.RightThumbY / 32768f;
+
 
                 GamepadButtonFlags buttonFlags = state.Gamepad.Buttons;
 
                 A = (buttonFlags == GamepadButtonFlags.A);
-
+                X = (buttonFlags == GamepadButtonFlags.X);
                 Thread.Sleep(10);
             }
 
             Console.WriteLine("CONTROLLER DISCONNECTED!");
             LookForControllers();
 
-            /*
-
-
-            while (true)
-            {
-                stick.GetCurrentState(ref joystickState);
-                A = joystickState.Buttons[0];
-                X = joystickState.Buttons[2];
-                JoystickLeftX = ((float)joystickState.X) / (65535f / 2f) - 1f;
-                JoystickLeftY = ((float)joystickState.Y) / (65535f / 2f) - 1f;
-
-                int m = 0;
-                foreach (var i in stick.GetObjects())
-                {
-
-                    Console.WriteLine(m + " : " + i.Name);
-                    m++;
-                }
-                // Wait a bit so we dont kill the game
-                Thread.Sleep(40);
-            }
-
-            */
         }
 
 

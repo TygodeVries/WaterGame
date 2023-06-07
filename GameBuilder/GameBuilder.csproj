@@ -62,7 +62,6 @@
     <Compile Include="Levels\LevelCache.cs" />
     <Compile Include="Levels\LevelLoading.cs" />
     <Compile Include="Levels\ObjectLoader.cs" />
-    <Compile Include="Particle\FireParticle.cs" />
     <Compile Include="Physics\ColliderDetection.cs" />
     <Compile Include="Physics\CollisionCorrection.cs" />
     <Compile Include="Physics\PhysicsEngine.cs" />
@@ -71,7 +70,6 @@
     <Compile Include="Scripts\Character.cs" />
     <Compile Include="Scripts\Coin.cs" />
     <Compile Include="Scripts\Collider.cs" />
-    <Compile Include="Scripts\FireEmiter.cs" />
     <Compile Include="Scripts\PlayerController.cs" />
     <Compile Include="Scripts\Pupit.cs" />
     <Compile Include="Scripts\RigidBody.cs" />

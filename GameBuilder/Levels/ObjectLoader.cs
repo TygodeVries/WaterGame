@@ -32,13 +32,6 @@ namespace GameBuilder.Levels
 
             PhysicsEngine.AddCollider(collider);
         }
-        public static void LoadFireAt(int x, int y)
-        {
-            GameObject o = new GameObject();
-            o.scripts.Add(new FireEmiter());
-            o.posistion = new Vector(x * 16, y * 16);
-            o.inizilize();
-        }
 
         public static void LoadNpcAt(int x, int y, string version)
         {
