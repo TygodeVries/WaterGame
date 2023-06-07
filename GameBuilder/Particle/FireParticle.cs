@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using GameBuilder.Scripts;
 using GameBuilder.Levels;
 using GameBuilder._Math;
+using System.Drawing;
 
 namespace GameBuilder.Particle
 {
@@ -25,14 +26,26 @@ namespace GameBuilder.Particle
 
         float LifeTime = 0;
 
+        float offsetFromCenter;
+
         public override void Update()
         {
             LifeTime += Time.DeltaTime;
-            if (LifeTime > 3f) GameObject.Destroy(gameObject);
+            float flameHight = 10;
+            float absoffsetFromCenter = Math.Abs(offsetFromCenter);
+
+            if (absoffsetFromCenter < 1) gameObject.particleData.color = Color.White;
+            else if (absoffsetFromCenter < 2) gameObject.particleData.color = Color.Red;
+            else (absoffsetFromCenter < 2) gameObject.particleData.color = Color.DarkRed;
+
+            if (LifeTime > flameHight / absoffsetFromCenter) GameObject.Destroy(gameObject);
 
             gameObject.posistion.y -= Time.DeltaTime * 4;
 
-            gameObject.posistion.x += (float) rng.NextDouble() - 0.5f;
+
+            float offsetaddition = (float)rng.NextDouble() - 0.5f;
+            gameObject.posistion.x += offsetaddition;
+            offsetFromCenter += offsetaddition;
         }
     }
 }
