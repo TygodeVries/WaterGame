@@ -117,7 +117,7 @@ namespace GameBuilder.Rendering
             }
             catch (Exception e)
             {
-                Debug.SendFatalErrorMessage("Error running window.\n" + e);
+                Environment.Exit(0);
             }
         }
 

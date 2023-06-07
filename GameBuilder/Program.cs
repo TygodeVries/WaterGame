@@ -19,7 +19,7 @@ namespace GameBuilder
 
     static void Main(string[] args)
         {
-            AssetLoading.LoadAssetsIfNotExist(AssetPath);
+            AssetLoading.LoadAssetsIfNotExist(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
 
 
             if (InputManager.UseController)

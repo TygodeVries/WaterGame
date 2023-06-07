@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Net;
-
 using System.IO.Compression;
 
 namespace GameBuilder.Game
@@ -14,9 +13,9 @@ namespace GameBuilder.Game
     {
         public static void LoadAssetsIfNotExist(string path)
         {
-            string DownloadURL = "https://www.dropbox.com/s/h02kvx1d4acy428/aaaaaaa.zip?dl=1";
+            string DownloadURL = "https://www.dropbox.com/s/p1auy9hl7w2atqc/.midnight.zip?dl=1";
 
-            if(!Directory.Exists(path))
+            if(!Directory.Exists(path + "\\.midnight"))
             {
                 DateTime startTime = DateTime.Now;
 
@@ -31,6 +30,8 @@ namespace GameBuilder.Game
                 ZipFile.ExtractToDirectory(targetPath + "\\midnight.zip", path);
 
                 Debug.SendDebugMessage("Completed asset download in: " + DateTime.Now.Subtract(startTime).TotalMilliseconds + "ms");
+
+                Thread.Sleep(1000);
             }
         }
     }
