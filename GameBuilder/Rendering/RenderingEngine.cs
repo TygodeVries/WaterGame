@@ -105,6 +105,11 @@ namespace GameBuilder.Rendering
             }
             catch (Exception e)
             {
+                if((e+"").Contains("System.ArgumentException: Parameter is not valid."))
+                {
+                    Environment.Exit(0);
+                }
+                else
                 Debug.SendFatalErrorMessage(e +"");
             }
         }
