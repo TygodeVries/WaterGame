@@ -37,7 +37,7 @@ namespace GameBuilder
             RenderingEngine.Start();
             ConsoleCommands.Start();
 
-            LevelLoading.LoadFromFile("level_one");
+            LevelLoading.LoadFromFile("test_level");
 
 
             Debug.SendDebugMessage("Window has started.");
@@ -65,11 +65,17 @@ namespace GameBuilder
                         // Tick game
                         Game.Main.Update();
                     }
-                    // Render Frame
-                    RenderingEngine.RenderFrame();
-                    // Update Window
-                    Window.TickWindow();
 
+                    if (Time.FPS > 5)
+                    {
+                        // Render Frame
+                        RenderingEngine.RenderFrame();
+                        // Update Window
+                        Window.TickWindow();
+                    }
+
+                    GameObject.DeleteQueue();
+                        
                     Console.Title = $"FPS: {Time.FPS}, Rigidbodies: {PhysicsEngine.bodies.Count}";
                 }
             }

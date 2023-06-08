@@ -12,11 +12,42 @@ namespace GameBuilder.Levels
 {
     internal class GameObject
     {
+        public static void DeleteQueue()
+        {
+            for (int i = 0; i < scedualedForDeletion.Count; i++)
+            {
+                GameObject obj = scedualedForDeletion[i];
+
+                Collider collider = (Collider)obj.getScript("Collider");
+
+                if (collider != null)
+                {
+                    foreach (List<Collider> colliders in PhysicsEngine.ActiveColliders.Values)
+                    {
+                        colliders.Remove(collider);
+                    }
+                }
+
+                RigidBody body = (RigidBody)obj.getScript("RigidBody");
+
+                if (body != null)
+                {
+                    PhysicsEngine.bodies.Remove(body);
+                }
+
+                RenderingEngine.CurrentLoadedLevel.Objects.Remove(obj);
+                RenderingEngine.CurrentLoadedLevel.Particles.Remove(obj);
+                obj.posistion = new Vector(10000, 10000);
+            }
+
+            scedualedForDeletion.Clear();
+        }
+
+        static List<GameObject> scedualedForDeletion = new List<GameObject>();
+
         public static void Destroy(GameObject obj)
         {
-            RenderingEngine.CurrentLoadedLevel.Objects.Remove(obj);
-            RenderingEngine.CurrentLoadedLevel.Particles.Remove(obj);
-            obj.posistion = new Vector(10000, 10000);
+            scedualedForDeletion.Add(obj);
         }
 
         public int layer = 1;
@@ -51,6 +82,10 @@ namespace GameBuilder.Levels
             foreach (Script s in scripts)
             {
                 s.gameObject = this;
+            }
+
+            foreach(Script s in scripts)
+            {
                 s.Start();
             }
             // Add object to render engine
@@ -80,6 +115,12 @@ namespace GameBuilder.Levels
 
         public List<Script> scripts = new List<Script>();
 
+
+        /// <summary>
+        /// Returns null if not found.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public Script getScript(string type)
         {
             foreach (Script script in scripts)

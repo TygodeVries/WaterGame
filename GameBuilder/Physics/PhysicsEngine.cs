@@ -39,13 +39,19 @@ namespace GameBuilder.Physics
 
         static bool LoadingLastFrame = true;
 
+        static Random rng = new Random();
+
         // Physics tick is called once a frame
         public static void Tick()
         {
             while(bodies.Count > 501)
             {
-                GameObject.Destroy(bodies[1].gameObject);
-                bodies.RemoveAt(1);
+                RigidBody gmobj = bodies[rng.Next(0, bodies.Count)];
+                if (gmobj.gameObject.name == "water")
+                {
+                    GameObject.Destroy(gmobj.gameObject);
+                    bodies.Remove(gmobj);
+                }
             }
 
             if (!LevelLoading.Loading && LoadingLastFrame)

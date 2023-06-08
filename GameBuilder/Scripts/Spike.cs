@@ -28,7 +28,7 @@ namespace GameBuilder.Scripts
 
         }
 
-        public void OnCollisionEnter()
+        public void OnCollisionEnter(GameObject collider)
         {
             if (!hasFired)
             {

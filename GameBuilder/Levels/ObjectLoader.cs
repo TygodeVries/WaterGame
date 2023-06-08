@@ -33,6 +33,26 @@ namespace GameBuilder.Levels
             PhysicsEngine.AddCollider(collider);
         }
 
+        public static void LoadTreeAt(int x, int y)
+        {
+            GameObject o = new GameObject();
+            o.sprite = SpriteManager.loadSprite("generic\\coin.png");
+            o.renderingOffset = new Vector(0, -13);
+            o.posistion = new Vector(x * 16, y * 16);
+
+            Collider collider = new Collider();
+            collider.bottomLeft = o.posistion + new Vector(0, 16);
+            collider.topRight = o.posistion + new Vector(16, 0);
+            collider.isTrigger = true;
+
+            o.scripts.Add(collider);
+            o.scripts.Add(new Waterable());
+            o.scripts.Add(new Tree());
+            o.inizilize();
+
+            PhysicsEngine.AddCollider(collider);
+        }
+
         public static void LoadNpcAt(int x, int y, string version)
         {
             GameObject o = new GameObject();

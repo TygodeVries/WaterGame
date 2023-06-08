@@ -81,7 +81,6 @@ namespace GameBuilder.Physics
             CorrectionDistance = (int)Math.Round(CorrectionDistance);
             if (CorrectionDistance - 10 == 0) return;
 
-            Console.WriteLine("Corrected collision by: y=" + (CorrectionDistance - 10)) ;
 
             body.gameObject.posistion.y += CorrectionDistance - 10;
         }

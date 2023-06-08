@@ -64,6 +64,7 @@ namespace GameBuilder.Particle
             GameObject particle = new GameObject();
             particle.particleData = new ParticleData(Color.FromArgb(255 / 2, 10, 10, 255));
             particle.posistion = location;
+            particle.name = "water";
             particle.size = new Vector(1, 1);
 
             RigidBody rigidBody = new RigidBody();

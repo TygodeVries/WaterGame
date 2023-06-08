@@ -50,7 +50,7 @@ namespace GameBuilder.Scripts
             }
         }
 
-        public void OnCollisionEnter()
+        public void OnCollisionEnter(GameObject collider)
         {
             ShowDialog = true;
         }

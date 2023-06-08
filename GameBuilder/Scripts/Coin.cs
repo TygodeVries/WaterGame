@@ -27,7 +27,7 @@ namespace GameBuilder.Scripts
 
         }
 
-        public void OnCollisionEnter()
+        public void OnCollisionEnter(GameObject collision)
         {
             GameObject.Destroy(this.gameObject);
             Console.WriteLine("CoinCollected");

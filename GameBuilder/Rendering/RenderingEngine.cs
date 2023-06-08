@@ -31,32 +31,38 @@ namespace GameBuilder.Rendering
         }
         static void RenderLayer(int i, Graphics graphics16)
         {
-            foreach (GameObject gameObject in CurrentLoadedLevel.Objects)
+            try
             {
-                if (!gameObject.IsVisible) continue;
-                if (gameObject.layer != i) continue;
-
-                if (gameObject.sprite == null || gameObject.sprite.image == null)
+                foreach (GameObject gameObject in CurrentLoadedLevel.Objects)
                 {
-                    continue;
+                    if (!gameObject.IsVisible) continue;
+                    if (gameObject.layer != i) continue;
+
+                    if (gameObject.sprite == null || gameObject.sprite.image == null)
+                    {
+                        continue;
+                    }
+
+                    Vector v = WorldPointToScreen(gameObject.posistion + gameObject.renderingOffset);
+
+                    if (v.x > bitmapRender16.Width) continue;
+                    if (v.x < -16) continue;
+
+                    if (v.y > bitmapRender16.Height) continue;
+                    if (v.y < -16) continue;
+
+                    Image render = gameObject.sprite.image;
+                    graphics16.DrawImage(render, (int)v.x, (int)v.y);
+
+                    Text text = (Text)gameObject.getScript("Text");
+                    if (text != null)
+                    {
+                        graphics16.DrawString(text.text, drawFont, drawBrush, new Rectangle((int)WorldPointToScreen(gameObject.posistion).x, (int)WorldPointToScreen(gameObject.posistion).y, 64, 32));
+                    }
                 }
-
-                Vector v = WorldPointToScreen(gameObject.posistion + gameObject.renderingOffset);
-
-                if (v.x > bitmapRender16.Width) continue;
-                if (v.x < -16) continue;
-
-                if (v.y > bitmapRender16.Height) continue;
-                if (v.y < -16) continue;
-
-                Image render = gameObject.sprite.image;
-                graphics16.DrawImage(render, (int)v.x, (int)v.y);
-
-                Text text = (Text)gameObject.getScript("Text");
-                if (text != null)
-                {
-                    graphics16.DrawString(text.text, drawFont, drawBrush, new Rectangle((int)WorldPointToScreen(gameObject.posistion).x, (int)WorldPointToScreen(gameObject.posistion).y, 64, 32));
-                }
+            } catch(Exception e)
+            {
+                Debug.SendErrorMessage("Error drawing game-object: " + e);
             }
         }
 

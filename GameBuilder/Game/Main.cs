@@ -23,11 +23,16 @@ namespace GameBuilder.Game
         {
             if (!paused)
             {
-                GameObject.TickGameObjects();
-
-                if(Time.FPS > 30) PhysicsEngine.Tick();
-                
-                GameObject.TickLateGameObjects();
+                if (Time.FPS > 10)
+                {
+                    GameObject.TickGameObjects();
+                    PhysicsEngine.Tick();
+                    GameObject.TickLateGameObjects();
+                }
+                else
+                {
+                    Debug.SendErrorMessage("FPS is to low, pausing game.");
+                }
                 if (DebugIsOn) Debug.Tick();
                 Camera.tick();
             }

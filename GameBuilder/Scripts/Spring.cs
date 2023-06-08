@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using GameBuilder.Levels;
 namespace GameBuilder.Scripts
 {
     internal class Spring : Script
@@ -26,7 +26,7 @@ namespace GameBuilder.Scripts
 
         }
 
-        public void OnCollisionEnter()
+        public void OnCollisionEnter(GameObject collider)
         {
             PhysicsEngine.bodies[0].velocity.y = -3f;
         }

@@ -77,6 +77,8 @@
     <Compile Include="Scripts\Spike.cs" />
     <Compile Include="Scripts\Spring.cs" />
     <Compile Include="Scripts\Text.cs" />
+    <Compile Include="Scripts\Tree.cs" />
+    <Compile Include="Scripts\Waterable.cs" />
     <Compile Include="User\ConsoleCommands.cs" />
     <Compile Include="User\ControllerInput.cs" />
     <Compile Include="User\InputManager.cs" />

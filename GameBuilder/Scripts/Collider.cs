@@ -37,17 +37,17 @@ namespace GameBuilder.Scripts
 
         }
 
-        public void onCollision()
+        public void onCollision(GameObject collider)
         { 
-            foreach (Action a in actions)
+            foreach (Action<GameObject> a in actions)
             {
-                a();
+                a(collider);
             }
         }
 
-        List<Action> actions = new List<Action>();
+        List<Action<GameObject>> actions = new List<Action<GameObject>>();
 
-        public void Subscribe(Action action)
+        public void Subscribe(Action<GameObject> action)
         {
             actions.Add(action);
         }

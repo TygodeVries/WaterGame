@@ -161,6 +161,10 @@ namespace GameBuilder.Levels
                             ObjectLoader.LoadSpikeAt(x, y);
                         }
 
+                        if (mapping._object == "tree")
+                        {
+                            ObjectLoader.LoadTreeAt(x, y);
+                        }
 
                         if (mapping._object == "npc")
                         {
