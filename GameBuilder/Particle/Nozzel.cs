@@ -69,6 +69,7 @@ namespace GameBuilder.Particle
 
             RigidBody rigidBody = new RigidBody();
             rigidBody.DownOffset = 0;
+
             rigidBody.ShouldCorrect = false;
             rigidBody.velocity = Direction;
             particle.scripts.Add(rigidBody);

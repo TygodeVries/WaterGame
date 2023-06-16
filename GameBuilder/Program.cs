@@ -37,7 +37,7 @@ namespace GameBuilder
             RenderingEngine.Start();
             ConsoleCommands.Start();
 
-            LevelLoading.LoadFromFile("test_level");
+            LevelLoading.LoadFromFile("level_one");
 
 
             Debug.SendDebugMessage("Window has started.");
@@ -57,17 +57,15 @@ namespace GameBuilder
                 {
                     if (!LevelLoading.Loading)
                     {
-                        InputManager.Tick();
-
                         // Update Inputs
                         Time.Tick();
-
-                        // Tick game
-                        Game.Main.Update();
                     }
 
-                    if (Time.FPS > 5)
-                    {
+                    if (Time.FPS > 5 && !LevelLoading.Loading)
+                    {   // Tick Input
+                        InputManager.Tick();
+                        // Tick game
+                        Game.Main.Update();
                         // Render Frame
                         RenderingEngine.RenderFrame();
                         // Update Window

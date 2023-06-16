@@ -28,7 +28,8 @@ namespace GameBuilder.Scripts
 
         public void OnCollisionEnter(GameObject collider)
         {
-            PhysicsEngine.bodies[0].velocity.y = -3f;
+            RigidBody body = (RigidBody) collider.getScript("RigidBody");
+            body.velocity.y = -3f;
         }
     }
 }
