@@ -26,6 +26,7 @@ namespace GameBuilder.Rendering
 
         public static void Start()
         {
+            Debug.SendDebugMessage($"Set game size to {X * 16}, {Y * 16}");
             drawBrush = new SolidBrush(Color.Black);
             drawFont = new Font("Raster Fonts", 6);
         }

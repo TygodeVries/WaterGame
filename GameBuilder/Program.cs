@@ -13,14 +13,13 @@ namespace GameBuilder
     {
         public static string AssetPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\.midnight\\assets";
         public static string DataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\.midnight";
-
-
-
-
         static void Main(string[] args)
         {
-            Window.CreateWindow();
+            // Time that loading starts.
+            DateTime startTime = DateTime.Now;
 
+            //  Create Windows
+            Window.CreateWindow();
             Debug.SendDebugMessage("Waiting for window to start.");
 
             while (!Window.IsReady)
@@ -28,55 +27,68 @@ namespace GameBuilder
 
             }
 
+            Debug.SendDebugMessage("Detected window is launched!");
+            
+            // Load assets from web.
             AssetLoading.LoadAssetsIfNotExist(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
 
-            // Start controller thread
-            Thread thr = new Thread(ControllerInput.LookForControllers);
-            thr.Start();
-
+            // Start engine.
             RenderingEngine.Start();
             ConsoleCommands.Start();
+            ControllerInput.Start();
+            Time.Start();
 
-            LevelLoading.LoadFromFile("level_one");
+            //  Load main menu level / start.           
+            LevelLoading.LoadFromFile("menu");
 
+            // Sebd start message
+            Debug.SendDebugMessage($"Game has started! in {DateTime.Now.Subtract(startTime).TotalMilliseconds}ms");
 
-            Debug.SendDebugMessage("Window has started.");
+            // Start core game loop
+            StartGameLoop();
+        }
 
-            Debug.SendDebugMessage("Running game Start() Function.");
-
-            // Make sure timer is running correctly
-            Time.Tick();
-            Time.Tick();
-
-            Game.Main.Start();
-            Debug.SendDebugMessage("DONE!");
+        static void StartGameLoop()
+        {
+            /*
+             *  Core game loop
+             */
 
             while (true)
             {
-                if (!Game.Main.paused)
-                {
-                    if (!LevelLoading.Loading)
-                    {
-                        // Update Inputs
-                        Time.Tick();
-                    }
+                Time.Tick();
 
-                    if (Time.FPS > 5 && !LevelLoading.Loading)
-                    {   // Tick Input
-                        InputManager.Tick();
-                        // Tick game
-                        Game.Main.Update();
-                        // Render Frame
-                        RenderingEngine.RenderFrame();
-                        // Update Window
-                        Window.TickWindow();
-                    }
+                if (LevelLoading.Loading) continue;
 
-                    GameObject.DeleteQueue();
-                        
-                    Console.Title = $"FPS: {Time.FPS}, Rigidbodies: {PhysicsEngine.bodies.Count}";
-                }
+                /*
+                 *  Pause game if FPS is below 5. 
+                 *  note; This is a hot fix. but it works.
+                 */
+
+                if (Time.FPS < 5) continue;
+
+                TickInput();
+                TickGame();
+                TickBackend();
             }
+
+        }
+
+        static void TickInput()
+        {
+            InputManager.Tick();
+        }
+
+        static void TickGame()
+        {
+            Game.Main.Update();
+        }
+
+        static void TickBackend()
+        {
+            RenderingEngine.RenderFrame();
+            Window.TickWindow();
+            GameObject.DeleteQueue();
         }
     }
 }

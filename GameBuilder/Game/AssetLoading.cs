@@ -12,8 +12,11 @@ namespace GameBuilder.Game
 
         public static void LoadAssetsIfNotExist(string path)
         {
-            if (dontUpdate) return;
-
+            if (dontUpdate)
+            {
+                Debug.SendErrorMessage("Warning: dontUpdate is turned on, Not checking files.");
+                return;
+            }
 
             string DownloadURL = "https://www.dropbox.com/s/p1auy9hl7w2atqc/.midnight.zip?dl=1";
 

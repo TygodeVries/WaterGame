@@ -73,7 +73,7 @@ namespace GameBuilder.Scripts
         {
             // Time things that will make sure we dont update every frame.
             TimeSinceLastSpriteChance += Time.DeltaTime;
-            if (TimeSinceLastSpriteChance < 0.4f) return;
+            if (TimeSinceLastSpriteChance < 0.1f) return;
             TimeSinceLastSpriteChance = 0;
 
             // Update sprite.

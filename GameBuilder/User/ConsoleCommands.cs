@@ -43,14 +43,6 @@ namespace GameBuilder.User
                     case "ping":
                         Console.WriteLine("Pong!");
                         break;
-                    case "pause":
-                        Main.paused = true;
-                        Console.WriteLine("Paused!");
-                        break;
-                    case "unpause":
-                        Main.paused = false;
-                        Console.WriteLine("Un-Paused!");
-                        break;
                     case "camera_debug":
                         Camera.currectCameraState = Camera.state.debug;
                         break;

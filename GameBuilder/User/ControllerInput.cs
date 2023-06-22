@@ -8,13 +8,26 @@ namespace GameBuilder.User
     internal class ControllerInput
     {
 
+        public static void Start()
+        {
+            Thread thr = new Thread(LookForControllers);
+            thr.Start();
+        }
+
         static Controller controller;
-        public static void Rumble(float left, float right)
+        public static void Rumble(ushort left, ushort right, int time)
         {
             Vibration v = new Vibration();
-            v.LeftMotorSpeed = 4000;
-            v.RightMotorSpeed = 4000;
-            controller.SetVibration(v);
+            v.LeftMotorSpeed = left;
+            v.RightMotorSpeed = right;
+            SharpDX.Result result = controller.SetVibration(v);
+
+            Thread.Sleep(time);
+
+            Vibration v2 = new Vibration();
+            v2.LeftMotorSpeed = 0;
+            v2.RightMotorSpeed = 0;
+            SharpDX.Result result2 = controller.SetVibration(v2);
         }
 
         public static void LookForControllers()
@@ -44,10 +57,7 @@ namespace GameBuilder.User
 
             InputManager.usingController = true;
 
-            Vibration v = new Vibration();
-            v.LeftMotorSpeed = 4000;
-            v.RightMotorSpeed = 4000;
-            controller.SetVibration(v);
+            Rumble(1000, 1000, 500);
 
 
             State state;

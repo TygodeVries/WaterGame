@@ -8,6 +8,7 @@ using System.Threading;
 using System.IO;
 using System.Diagnostics;
 using System.Collections.Generic;
+using SharpDX.Text;
 
 namespace GameBuilder.Game
 {
@@ -33,23 +34,62 @@ namespace GameBuilder.Game
         public static void SendFatalErrorMessage(string message)
         {
             Console.BackgroundColor = ConsoleColor.DarkRed;
-            Console.WriteLine();
-            Directory.CreateDirectory(Program.DataPath + "\\logs");
-            File.WriteAllLines(Program.DataPath + "\\logs\\latest.txt", new string[] { " -- Project Midnight has crashed. -- ","", "[FATAL] " + message, "", " --  Project Midnight has crashed. -- ", "", "This log has been saved to: " + Program.DataPath + "\\logs\\latest.txt" });
             
-            Process.Start("notepad.exe", (Program.DataPath + "\\logs\\latest.txt"));
+            // Create logs directory if missing
+            Directory.CreateDirectory(Program.DataPath + "\\logs");
+
+            log.Add(DateTime.Now.ToShortTimeString() + " : [! FATAL !] " + message);
+
+            writelogtoFile("latest");
+            writelogtoFile(DateTime.Now.ToShortDateString().Replace('/', '-') + "_" + DateTime.Now.ToShortTimeString().Replace(':', '-').Replace(' ', '-') + $"({DateTime.Now.Second})");
+
+            Process p = Process.Start("notepad.exe", (Program.DataPath + "\\logs\\latest.txt"));
+            
             Environment.Exit(0);
         }
 
-        static void saveLog()
+        static void writelogtoFile(string name)
         {
+            File.WriteAllText(Program.DataPath + $"\\logs\\{name}.txt", ".");
 
-        }
+            Thread.Sleep(500);
 
-        public static void Tick()
-        {
-            //  UpdateCameraPosistion();
+            FileStream stream = new FileStream(Program.DataPath + $"\\logs\\{name}.txt", FileMode.Open, FileAccess.ReadWrite);
 
+            string msg = "";
+
+            // Crash message
+            msg = " -- Project Midnight has crashed. -- ";
+            stream.Write(Encoding.UTF8.GetBytes(msg), 0, Encoding.UTF8.GetBytes(msg).Length);
+
+            // White line
+            msg = " ";
+            stream.Write(Encoding.UTF8.GetBytes(msg), 0, Encoding.UTF8.GetBytes(msg).Length);
+
+            // Log
+            foreach (string m in log)
+            {
+                msg = m + "\n";
+                stream.Write(Encoding.UTF8.GetBytes(msg), 0, Encoding.UTF8.GetBytes(msg).Length);
+            }
+
+            // White line
+            msg = " ";
+            stream.Write(Encoding.UTF8.GetBytes(msg), 0, Encoding.UTF8.GetBytes(msg).Length);
+
+            // Crash message
+            msg = " -- Project Midnight has crashed. -- ";
+            stream.Write(Encoding.UTF8.GetBytes(msg), 0, Encoding.UTF8.GetBytes(msg).Length);
+
+            // White line
+            msg = " ";
+            stream.Write(Encoding.UTF8.GetBytes(msg), 0, Encoding.UTF8.GetBytes(msg).Length);
+
+            // Save target
+            msg = "This log has been saved to: " + Program.DataPath + "\\logs\\latest.txt";
+            stream.Write(Encoding.UTF8.GetBytes(msg), 0, Encoding.UTF8.GetBytes(msg).Length);
+
+            stream.Close();
         }
         public static void UpdateCameraPosistion()
         {
