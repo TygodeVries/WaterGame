@@ -59,11 +59,11 @@ namespace GameBuilder.Game
             string msg = "";
 
             // Crash message
-            msg = " -- Project Midnight has crashed. -- ";
+            msg = " -- Project Midnight has crashed. -- \n";
             stream.Write(Encoding.UTF8.GetBytes(msg), 0, Encoding.UTF8.GetBytes(msg).Length);
 
             // White line
-            msg = " ";
+            msg = "\n";
             stream.Write(Encoding.UTF8.GetBytes(msg), 0, Encoding.UTF8.GetBytes(msg).Length);
 
             // Log
@@ -74,19 +74,19 @@ namespace GameBuilder.Game
             }
 
             // White line
-            msg = " ";
+            msg = "\n";
             stream.Write(Encoding.UTF8.GetBytes(msg), 0, Encoding.UTF8.GetBytes(msg).Length);
 
             // Crash message
-            msg = " -- Project Midnight has crashed. -- ";
+            msg = " -- Project Midnight has crashed. -- \n";
             stream.Write(Encoding.UTF8.GetBytes(msg), 0, Encoding.UTF8.GetBytes(msg).Length);
 
             // White line
-            msg = " ";
+            msg = "\n";
             stream.Write(Encoding.UTF8.GetBytes(msg), 0, Encoding.UTF8.GetBytes(msg).Length);
 
             // Save target
-            msg = "This log has been saved to: " + Program.DataPath + "\\logs\\latest.txt";
+            msg = "This log has been saved to: " + Program.DataPath + "\\logs\\latest.txt\n";
             stream.Write(Encoding.UTF8.GetBytes(msg), 0, Encoding.UTF8.GetBytes(msg).Length);
 
             stream.Close();

@@ -11,12 +11,21 @@ namespace GameBuilder
 {
     internal class Program
     {
+
+        /// <summary>
+        /// Path of the game's assets folder (Appdata\\.midnight\\assets)
+        /// </summary>
         public static string AssetPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\.midnight\\assets";
+        /// <summary>
+        /// The datapath of the game's folder (Appdata\\.midnight)
+        /// </summary>
         public static string DataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\.midnight";
         static void Main(string[] args)
         {
             // Time that loading starts.
             DateTime startTime = DateTime.Now;
+            Debug.SendDebugMessage("Welcome to midnight! Today its " + startTime.ToShortDateString() + " at " + startTime.ToShortTimeString());
+
 
             //  Create Windows
             Window.CreateWindow();
@@ -27,7 +36,7 @@ namespace GameBuilder
 
             }
 
-            Debug.SendDebugMessage("Detected window is launched!");
+            Debug.SendDebugMessage("Detected that window is launched!");
             
             // Load assets from web.
             AssetLoading.LoadAssetsIfNotExist(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
