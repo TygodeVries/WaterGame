@@ -84,7 +84,7 @@ namespace GameBuilder.Levels
                 s.gameObject = this;
             }
 
-            foreach(Script s in scripts)
+            foreach (Script s in scripts)
             {
                 s.Start();
             }
@@ -132,7 +132,7 @@ namespace GameBuilder.Levels
                 }
             }
 
-           return null;
+            return null;
         }
 
 
@@ -156,20 +156,22 @@ namespace GameBuilder.Levels
 
             try
             {
-                foreach (GameObject g in RenderingEngine.CurrentLoadedLevel.Objects)
+                for (int i = 0; i < RenderingEngine.CurrentLoadedLevel.Objects.Count; i++)
                 {
+                    GameObject g = RenderingEngine.CurrentLoadedLevel.Objects[i];
                     g.tick();
                 }
 
-                for(int i = 0; i < RenderingEngine.CurrentLoadedLevel.Particles.Count; i++)
+                for (int i = 0; i < RenderingEngine.CurrentLoadedLevel.Particles.Count; i++)
                 {
-                    if(i < RenderingEngine.CurrentLoadedLevel.Particles.Count)
-                      RenderingEngine.CurrentLoadedLevel.Particles[i].tick();
+                    if (i < RenderingEngine.CurrentLoadedLevel.Particles.Count)
+                        RenderingEngine.CurrentLoadedLevel.Particles[i].tick();
                 }
 
-            } catch(Exception e)
+            }
+            catch (Exception e)
             {
-                Debug.SendFatalErrorMessage( "Something went wrong ticking gameobjects! " + e);
+                Debug.SendFatalErrorMessage("Something went wrong ticking gameobjects! " + e);
             }
         }
 

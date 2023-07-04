@@ -4,6 +4,7 @@ using GameBuilder.Scripts;
 using GameBuilder.Particle;
 using System;
 using GameBuilder._Math;
+using GameBuilder.Audio;
 
 namespace GameBuilder.Game
 {

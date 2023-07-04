@@ -166,6 +166,16 @@ namespace GameBuilder.Levels
                             ObjectLoader.LoadTreeAt(x, y);
                         }
 
+                        if (mapping._object == "enemy")
+                        {
+                            ObjectLoader.spawnWalkerAt(x, y);
+                        }
+
+                        if(mapping._object == "water")
+                        {
+                            ObjectLoader.LoadWaterAt(x, y);
+                        }
+
                         if (mapping._object == "npc")
                         {
                             ObjectLoader.LoadNpcAt(x, y, mapping.options["version"]);

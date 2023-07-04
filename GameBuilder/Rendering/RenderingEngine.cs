@@ -15,8 +15,10 @@ namespace GameBuilder.Rendering
 {
     internal class RenderingEngine
     {
-        static int X = (int)Math.Round(16f * 1.4f);
-        static int Y = (int)Math.Round(9f * 1.4f);
+        static bool drawColliders = false;
+
+        static public int X = (int)Math.Round(16f * 1.4f);
+        static public int Y = (int)Math.Round(9f * 1.4f);
 
         public static Level CurrentLoadedLevel;
         static SolidBrush drawBrush;
@@ -105,6 +107,23 @@ namespace GameBuilder.Rendering
                     bitmapRender16.SetPixel((int)location.x, (int)location.y, particleData.color);
                 }
 
+                if(drawColliders)
+                {
+                    foreach (List<Collider> colliderList in Physics.PhysicsEngine.ActiveColliders.Values)
+                    {
+                        foreach (Collider collider in colliderList)
+                        {
+                            drawCollider(collider, graphics16);
+                        }
+                    }
+                    foreach (Collider collider in Physics.PhysicsEngine.alwaysLoaded)
+                    {
+                        drawCollider(collider, graphics16);
+                    }
+
+                }
+
+
                 // Render all graphics to the screen
                 Graphics targetgraphics = Window.buffer.Graphics;
                 targetgraphics.DrawImage(bitmapRender16, 0, 0, Window.windowWidth, Window.windowHeight);
@@ -126,6 +145,25 @@ namespace GameBuilder.Rendering
         public static float CameraX = 0;
         public static float CameraY = 0;
 
+        public static void drawCollider(Collider collider, Graphics graphics16)
+        {
+            Vector bottemLeft = WorldPointToScreen(collider.bottomLeft);
+            Vector topRight = WorldPointToScreen(collider.topRight);
+
+            SolidBrush brush = new SolidBrush(Color.Orange);
+
+            if (collider.isTrigger)
+            {
+                brush = new SolidBrush(Color.PowderBlue);
+            }
+
+            if (collider.gameObject.getScript("Spike") != null)
+            {
+                brush = new SolidBrush(Color.Red);
+            }
+
+            graphics16.DrawRectangle(new Pen(brush, 1), new Rectangle((int)bottemLeft.x, (int)topRight.y, (int)(topRight.x - bottemLeft.x), (int)(bottemLeft.y - topRight.y)));
+        }
 
         public static Vector WorldPointToScreen(Vector vector)
         {

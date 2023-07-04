@@ -23,14 +23,24 @@ namespace GameBuilder.Scripts
         {
             
         }
+
         public void SetAnimationState(string newState)
         {
-            if (newState == AnimationState) return;
+            try
+            {
+                if (newState == AnimationState) return;
 
-            AnimationState = newState;
-            CurrentFrameIndex = 0;
-            CurrentFrames = AnimationTypesToSprite[newState];
-            if(CurrentFrames == null)
+                AnimationState = newState;
+                CurrentFrameIndex = 0;
+                TimeSinceLastSpriteChance = 0;
+                CurrentFrames = AnimationTypesToSprite[newState];
+
+                if (CurrentFrames == null)
+                {
+                    Debug.SendFatalErrorMessage($"Animation {newState} not found.");
+                }
+
+            } catch(Exception e)
             {
                 Debug.SendFatalErrorMessage($"Animation {newState} not found.");
             }
@@ -40,8 +50,9 @@ namespace GameBuilder.Scripts
 
         public override void Start()
         {
-            string AnimationDir = Program.AssetPath + "\\sprite\\\\animation\\" + ContentRoot;
+            string AnimationDir = Program.AssetPath + "\\sprite\\animation\\" + ContentRoot;
             string[] AnimationPaths = Directory.GetDirectories(AnimationDir);
+            Debug.SendDebugMessage("Loading animation from: " + AnimationDir);
             int TotalLoaded = 0;
 
             foreach(string AnimationPath in AnimationPaths)
@@ -55,6 +66,7 @@ namespace GameBuilder.Scripts
 
                 foreach (string frameFile in FrameFiles)
                 {
+                    Debug.SendDebugMessage("Loaded frame: " + frameFile);
                     s.Add(SpriteManager.loadSpriteRaw(frameFile));
                 }
 
@@ -73,7 +85,7 @@ namespace GameBuilder.Scripts
         {
             // Time things that will make sure we dont update every frame.
             TimeSinceLastSpriteChance += Time.DeltaTime;
-            if (TimeSinceLastSpriteChance < 0.1f) return;
+            if (TimeSinceLastSpriteChance <= 0.1f) return;
             TimeSinceLastSpriteChance = 0;
 
             // Update sprite.

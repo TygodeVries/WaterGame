@@ -13,28 +13,40 @@ namespace GameBuilder.Physics
         public static void Unload()
         {
             ActiveColliders.Clear();
+            alwaysLoaded.Clear();
             bodies.Clear();
         }
 
         public static Dictionary<int, List<Collider>> ActiveColliders = new Dictionary<int, List<Collider>>();
+        public static List<Collider> alwaysLoaded = new List<Collider>();
+
 
         public static List<RigidBody> bodies = new List<RigidBody>();
 
-        public static void AddCollider(Collider collider)
+        public static void AddCollider(Collider collider, bool moving)
         {
-            List<Collider> list;
-
-            if (!ActiveColliders.ContainsKey((int)Math.Round(collider.gameObject.posistion.x / 16f)))
+            if (!moving)
             {
-                list = new List<Collider>();
-                ActiveColliders.Add((int)Math.Round(collider.gameObject.posistion.x / 16f), list);
+                List<Collider> list;
+
+                if (!ActiveColliders.ContainsKey((int)Math.Round(collider.gameObject.posistion.x / 16f)))
+                {
+                    list = new List<Collider>();
+                    ActiveColliders.Add((int)Math.Round(collider.gameObject.posistion.x / 16f), list);
+                }
+                else
+                {
+                    list = ActiveColliders[(int)Math.Round(collider.gameObject.posistion.x / 16f)];
+                }
+
+                list.Add(collider);
             }
             else
             {
-                list = ActiveColliders[(int)Math.Round(collider.gameObject.posistion.x / 16f)];
+                alwaysLoaded.Add(collider);
             }
 
-            list.Add(collider);
+
         }
 
         static bool LoadingLastFrame = true;
@@ -83,7 +95,11 @@ namespace GameBuilder.Physics
         {
             foreach (RigidBody rb in bodies)
             {
-                rb.velocity.y += (Time.DeltaTime * rb.Weight);
+                float maxFallSpeed = 2;
+                if (rb.velocity.y < maxFallSpeed)
+                {
+                    rb.velocity.y += (Time.DeltaTime * rb.Weight);
+                }
             }
         }
 
@@ -92,9 +108,13 @@ namespace GameBuilder.Physics
         {
             for (int i = 0; i < bodies.Count; i++)
             {
-                UpdateBodyVelocity(bodies[i]);
-                bodies[i].gameObject.posistion = bodies[i].gameObject.posistion + (bodies[i].velocity * (Time.DeltaTime * 100));
-                UpdateBodyVelocity(bodies[i]);
+                if (!(i > bodies.Count))
+                {
+                    UpdateBodyVelocity(bodies[i]);
+
+                    bodies[i].gameObject.posistion = bodies[i].gameObject.posistion + (bodies[i].velocity * (Time.DeltaTime * 100));
+                    UpdateBodyVelocity(bodies[i]);
+                }
             }
 
         }

@@ -1,4 +1,5 @@
 ﻿using GameBuilder._Math;
+using GameBuilder.Audio;
 using GameBuilder.Game;
 using GameBuilder.Levels;
 using GameBuilder.Physics;
@@ -45,10 +46,18 @@ namespace GameBuilder
             RenderingEngine.Start();
             ConsoleCommands.Start();
             ControllerInput.Start();
-            Time.Start();
+
+        //    AudioPlayer.PlayAudioSource("background.mp3");
 
             //  Load main menu level / start.           
-            LevelLoading.LoadFromFile("menu");
+            LevelLoading.LoadFromFile("test_level");
+
+            while(LevelLoading.Loading)
+            {
+
+            }
+
+            Time.Start();
 
             // Sebd start message
             Debug.SendDebugMessage($"Game has started! in {DateTime.Now.Subtract(startTime).TotalMilliseconds}ms");
@@ -79,6 +88,8 @@ namespace GameBuilder
                 TickInput();
                 TickGame();
                 TickBackend();
+
+                Console.Title = "Rigidbodies: " + PhysicsEngine.bodies.Count; 
             }
 
         }

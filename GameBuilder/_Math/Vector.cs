@@ -14,12 +14,12 @@ namespace GameBuilder._Math
 
         public Vector copy()
         {
-            return new Vector(x,y);
+            return new Vector(x, y);
         }
 
         public float magnitude()
         {
-            return (float) Math.Sqrt(x * x + y * y);
+            return (float)Math.Sqrt(x * x + y * y);
         }
 
 
@@ -28,17 +28,17 @@ namespace GameBuilder._Math
             float Fx = a.x - b.x;
             float Fy = a.y - b.y;
 
-            float aK = (float) Math.Pow((double) Fx, 2);
-            float bK = (float) Math.Pow((double)Fy, 2);
+            float aK = (float)Math.Pow((double)Fx, 2);
+            float bK = (float)Math.Pow((double)Fy, 2);
 
-            return (float) Math.Sqrt(aK + bK);
+            return (float)Math.Sqrt(aK + bK);
         }
         public Vector Round()
         {
-            float X = (float) Math.Round(x);
-            float Y = (float) Math.Round(y);
+            float X = (float)Math.Round(x);
+            float Y = (float)Math.Round(y);
 
-            return new Vector(X,Y);
+            return new Vector(X, Y);
         }
 
         public Vector(float x, float y)

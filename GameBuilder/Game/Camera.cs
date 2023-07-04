@@ -24,12 +24,18 @@ namespace GameBuilder.Game
 
         public static void tick()
         {
-            if (currectCameraState == state.follow)
+            if (currectCameraState == state.follow && tracking != null)
             {
                 // Send posistion update to renderer.
 
-                Camera.x = tracking.posistion.x;
-                Camera.y = tracking.posistion.y;
+                int xBufferSize = (RenderingEngine.X * 16);
+                int yBufferSize = (RenderingEngine.Y * 16);
+
+
+                Camera.x = (int)(tracking.posistion.x / xBufferSize) * xBufferSize;
+                Camera.y = (int)((tracking.posistion.y + (yBufferSize / 2)) / yBufferSize) * yBufferSize;
+
+                Camera.x += xBufferSize / 2;
 
                 RenderingEngine.CameraX = x - (RenderingEngine.bitmapRender16.Width / 2) + 20;
                 RenderingEngine.CameraY = y - (RenderingEngine.bitmapRender16.Height / 2);

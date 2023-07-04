@@ -34,7 +34,7 @@ namespace GameBuilder.Physics
             for (int i = 3; i < 20; i += 4)
             {
                 bool collision = ColliderDetection.PointIsOnCollider(bodyCollisionPoints[0] - new Vector(0, i), body);
-                if(collision) return collision;
+                if (collision) return collision;
             }
 
             return false;
@@ -56,13 +56,14 @@ namespace GameBuilder.Physics
         /// <param name="point">The point to check</param>
         /// <param name="body">The body of an physics object requesting the detection.</param>
         /// <returns></returns>
-       
+
 
 
         public static bool PointIsOnCollider(Vector point, RigidBody body)
         {
 
             if (PhysicsEngine.ActiveColliders.ContainsKey((int)Math.Round(point.x / 16f)))
+            {
                 foreach (Collider collider in PhysicsEngine.ActiveColliders[(int)Math.Round(point.x / 16f)])
                 {
                     if (body.collider == collider) continue;
@@ -73,8 +74,11 @@ namespace GameBuilder.Physics
                         if (!collider.isTrigger) return true;
                     }
                 }
+            }
+
 
             if (PhysicsEngine.ActiveColliders.ContainsKey((int)Math.Round(point.x / 16f) - 1))
+            {
                 foreach (Collider collider in PhysicsEngine.ActiveColliders[(int)Math.Round(point.x / 16f) - 1])
                 {
                     if (body.collider == collider) continue;
@@ -85,6 +89,7 @@ namespace GameBuilder.Physics
                         if (!collider.isTrigger) return true;
                     }
                 }
+            }
 
             if (PhysicsEngine.ActiveColliders.ContainsKey((int)Math.Round(point.x / 16f) + 1))
                 foreach (Collider collider in PhysicsEngine.ActiveColliders[(int)Math.Round(point.x / 16f) + 1])
@@ -98,6 +103,24 @@ namespace GameBuilder.Physics
                     }
                 }
 
+            for(int i = 0; i < PhysicsEngine.alwaysLoaded.Count; i++)
+            {
+                if (i > PhysicsEngine.alwaysLoaded.Count)
+                {
+                    continue;
+                }
+
+
+                Collider collider = PhysicsEngine.alwaysLoaded[i];
+
+                if (body.collider == collider) continue;
+
+                if (PointInSpesificCollider(point.x, point.y, collider))
+                {
+                    collider.onCollision(body.gameObject);
+                    if (!collider.isTrigger) return true;
+                }
+            }
             return false;
         }
         private static bool PointInSpesificCollider(float x, float y, Collider collider)
