@@ -21,14 +21,14 @@ namespace GameBuilder.Game
         public static void SendDebugMessage(string message)
         {
             string msg = DateTime.Now.ToShortTimeString() + " : [DEBUG] " + message;
-            Console.WriteLine(msg);
+        //    Console.WriteLine(msg);
             log.Add(msg);
         }
 
         public static void SendErrorMessage(string message)
         {
             string msg = DateTime.Now.ToShortTimeString() + " : [ERROR] " + message;
-            Console.WriteLine(msg);
+         //   Console.WriteLine(msg);
             log.Add(msg);
         }
         public static void SendFatalErrorMessage(string message)

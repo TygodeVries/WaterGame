@@ -44,7 +44,6 @@ namespace GameBuilder
 
             // Start engine.
             RenderingEngine.Start();
-            ConsoleCommands.Start();
             ControllerInput.Start();
 
         //    AudioPlayer.PlayAudioSource("background.mp3");
@@ -76,6 +75,8 @@ namespace GameBuilder
             {
                 Time.Tick();
 
+                ControllerInput.Tick();
+
                 if (LevelLoading.Loading) continue;
 
                 /*
@@ -88,8 +89,6 @@ namespace GameBuilder
                 TickInput();
                 TickGame();
                 TickBackend();
-
-                Console.Title = "Rigidbodies: " + PhysicsEngine.bodies.Count; 
             }
 
         }

@@ -1,7 +1,11 @@
-﻿using GameBuilder.Game;
+﻿using GameBuilder._Math;
+using GameBuilder.Game;
+using SharpDX.Win32;
 using SharpDX.XInput;
 using System;
+using System.IO;
 using System.Threading;
+using System.Windows.Media.Media3D;
 
 namespace GameBuilder.User
 {
@@ -14,20 +18,36 @@ namespace GameBuilder.User
             thr.Start();
         }
 
+
+        static float rumbleTimeLeft = 0;
+
         static Controller controller;
-        public static void Rumble(ushort left, ushort right, int time)
+        public static void Rumble(ushort left, ushort right, float time)
         {
+            if (controller == null) return;
+
+
             Vibration v = new Vibration();
             v.LeftMotorSpeed = left;
             v.RightMotorSpeed = right;
             SharpDX.Result result = controller.SetVibration(v);
 
-            Thread.Sleep(time);
+            rumbleTimeLeft = time;
+        }
 
-            Vibration v2 = new Vibration();
-            v2.LeftMotorSpeed = 0;
-            v2.RightMotorSpeed = 0;
-            SharpDX.Result result2 = controller.SetVibration(v2);
+        public static void Tick()
+        {
+            bool wasLeft = rumbleTimeLeft > 0;
+
+            rumbleTimeLeft -= Time.DeltaTime;
+
+            if(!(rumbleTimeLeft > 0) && wasLeft)
+            {
+                Vibration v = new Vibration();
+                v.LeftMotorSpeed = 0;
+                v.RightMotorSpeed = 0;
+                SharpDX.Result result = controller.SetVibration(v);
+            }
         }
 
         public static void LookForControllers()
@@ -57,7 +77,7 @@ namespace GameBuilder.User
 
             InputManager.usingController = true;
 
-            Rumble(1000, 1000, 500);
+            Rumble(1000, 1000, 0.1f);
 
 
             State state;
@@ -79,6 +99,7 @@ namespace GameBuilder.User
 
                 A = (buttonFlags == GamepadButtonFlags.A);
                 X = (buttonFlags == GamepadButtonFlags.X);
+                Y = (buttonFlags == GamepadButtonFlags.Y);
                 Thread.Sleep(10);
             }
 
@@ -88,7 +109,7 @@ namespace GameBuilder.User
         }
 
 
-
+        public static bool Y;
         public static bool A;
         public static bool X;
 

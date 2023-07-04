@@ -1,6 +1,7 @@
 ﻿using GameBuilder.Levels;
 using GameBuilder.Rendering;
 using GameBuilder.User;
+using System;
 using System.Diagnostics;
 
 namespace GameBuilder.Game
@@ -22,6 +23,10 @@ namespace GameBuilder.Game
 
         public static GameObject tracking;
 
+
+
+        static double lastX = 0;
+
         public static void tick()
         {
             if (currectCameraState == state.follow && tracking != null)
@@ -37,9 +42,22 @@ namespace GameBuilder.Game
 
                 Camera.x += xBufferSize / 2;
 
-                RenderingEngine.CameraX = x - (RenderingEngine.bitmapRender16.Width / 2) + 20;
+                RenderingEngine.CameraX = (x - (RenderingEngine.bitmapRender16.Width / 2)) + 0.5f;
                 RenderingEngine.CameraY = y - (RenderingEngine.bitmapRender16.Height / 2);
+
+                if((x - (RenderingEngine.bitmapRender16.Width / 2)) + 0.5f != lastX)
+                {
+                    ChancedX();
+                }
+
+
+                lastX = (x - (RenderingEngine.bitmapRender16.Width / 2)) + 0.5f; 
             }
+        }
+
+        static void ChancedX()
+        {
+            Console.WriteLine("Checkpoint!");
         }
     }
 }

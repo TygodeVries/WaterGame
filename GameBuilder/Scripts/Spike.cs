@@ -30,13 +30,16 @@ namespace GameBuilder.Scripts
 
         public void OnCollisionEnter(GameObject collider)
         {
-            if (!hasFired)
+            if (collider == Game.Main.playerController.gameObject)
             {
-                PlayerController p = (PlayerController)PhysicsEngine.bodies[0].gameObject.getScript("PlayerController");
-                p.Kill();
-            }
+                if (!hasFired)
+                {
+                    PlayerController p = (PlayerController)PhysicsEngine.bodies[0].gameObject.getScript("PlayerController");
+                    p.Kill();
+                }
 
-            hasFired = true;
+                hasFired = true;
+            }
         }
     }
 }

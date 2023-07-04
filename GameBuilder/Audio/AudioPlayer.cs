@@ -15,6 +15,7 @@ namespace GameBuilder.Audio
         {
             if(playerTable.ContainsKey(audioFileName))
             {
+                playerTable[audioFileName].Stop();
                 playerTable[audioFileName].Play();
             }
             else

@@ -148,7 +148,8 @@ namespace GameBuilder.Levels
         }
 
         public static void LoadFillerAt(int x, int y, string type)
-        {
+        { 
+
             GameObject o = new GameObject();
             o.sprite = SpriteManager.loadSprite($"tileset\\{type}\\fill.png");
 
@@ -185,22 +186,39 @@ namespace GameBuilder.Levels
             gobject.scripts.Add(body);
 
             gobject.scripts.Add(new Walker());
-            
-            Collider collider = new Collider(new Vector(14, 7));
-            collider.offset = new Vector(1, 8);
-            collider.LiveUpdate = true;
-            collider.isTrigger = true;
-            gobject.scripts.Add(collider);
-
-            body.collider = collider;
-
-            gobject.scripts.Add(new Spike());
 
             gobject.inizilize();
 
             pupit.SetAnimationState("walk_left");
 
+            //
+
+            GameObject fireObject = new GameObject();
+            fireObject.sprite = SpriteManager.loadSprite("generic\\fire.png");
+            fireObject.posistion = new Vector(10, 10);
+
+
+            Collider collider = new Collider(new Vector(14, 7));
+            collider.offset = new Vector(1, 8);
+            collider.LiveUpdate = true;
+            collider.isTrigger = true;
+            fireObject.scripts.Add(collider);
+
+            body.collider = collider;
+
+            fireObject.scripts.Add(new Waterable());
+            
+            Fire fire = new Fire();
+            fire.target = gobject;
+            fireObject.scripts.Add(fire);
+
+
+            fireObject.scripts.Add(new Spike());
+
+            fireObject.inizilize();
+
             PhysicsEngine.AddCollider(collider, true);
+
         }
 
         public static void LoadPlayerAt(int x, int y)

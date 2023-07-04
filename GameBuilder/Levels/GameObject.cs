@@ -26,6 +26,8 @@ namespace GameBuilder.Levels
                     {
                         colliders.Remove(collider);
                     }
+
+                    PhysicsEngine.alwaysLoaded.Remove(collider);
                 }
 
                 RigidBody body = (RigidBody)obj.getScript("RigidBody");

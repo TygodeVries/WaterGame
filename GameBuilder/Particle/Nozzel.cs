@@ -1,4 +1,5 @@
 ﻿using GameBuilder._Math;
+using GameBuilder.Audio;
 using GameBuilder.Game;
 using GameBuilder.Levels;
 using GameBuilder.Physics;
@@ -20,7 +21,7 @@ namespace GameBuilder.Particle
 
         static float SprayTime = 0;
 
-        public static float SprayTimeLeft = 99999;
+        public static float SprayTimeLeft = 99999999;
 
         public static void Tick()
         {
@@ -36,6 +37,8 @@ namespace GameBuilder.Particle
 
             if (SprayTime >= 0 && InputManager.sprayButton)
             {
+
+
                 direction.normalize();
 
                 SprayTime -= Time.DeltaTime;
@@ -44,7 +47,7 @@ namespace GameBuilder.Particle
 
                 for (int i = 0; i < 10; i++)
                 {
-                    Vector origin = player.posistion + new Vector((player.size.x / 2), (player.size.y / 2)) + (direction * 4);
+                    Vector origin = player.posistion + new Vector((player.size.x / 2), (player.size.y / 2)) + (direction * 4f);
 
                     float spread = 40; // lower is more. higher is less.
                     Vector particleDirection = (direction + (new Vector((float) rng.NextDouble() * 2 - 1, (float)rng.NextDouble() * 2 - 1) / spread));

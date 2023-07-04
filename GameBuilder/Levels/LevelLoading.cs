@@ -149,7 +149,10 @@ namespace GameBuilder.Levels
                         if (mapping._object == "ground")
                         {
                             Color topColor = levelbitmap.GetPixel(x, y - 1);
-                            if (topColor != null && topColor.ToArgb() == mapping.color.ToArgb()) ObjectLoader.LoadGroundAt(x, y, mapping.options["type"], false);
+                            if (topColor.A != 0)
+                            {
+                                ObjectLoader.LoadGroundAt(x, y, mapping.options["type"], false);
+                            }
                             else
                             {
                                 ObjectLoader.LoadGroundAt(x, y, mapping.options["type"], true);

@@ -6,16 +6,25 @@ namespace GameBuilder.Scripts
     {
         public GameObject gameObject;
 
-        public abstract void Start();
+        public virtual void Start()
+        {
+
+        }
 
         /// <summary>
         /// Called before the physics update.
         /// </summary>
-        public abstract void Update();
+        public virtual void Update()
+        {
+
+        }
 
         /// <summary>
         /// Called after the physics update.
         /// </summary>
-        public abstract void LateUpdate();
+        public virtual void LateUpdate()
+        {
+            
+        }
     }
 }
