@@ -8,7 +8,7 @@ namespace GameBuilder.Game
 {
     internal class AssetLoading
     {
-        public static bool dontUpdate = true;
+        public static bool dontUpdate = false;
 
         public static void LoadAssetsIfNotExist(string path)
         {
@@ -18,7 +18,7 @@ namespace GameBuilder.Game
                 return;
             }
 
-            string DownloadURL = "https://www.dropbox.com/s/p1auy9hl7w2atqc/.midnight.zip?dl=1";
+            string DownloadURL = "https://www.dropbox.com/s/juizbmkrxfq8b9k/.midnight.zip?dl=1";
 
             if(!Directory.Exists(path + "\\.midnight"))
             {
