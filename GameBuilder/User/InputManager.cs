@@ -33,7 +33,7 @@ namespace GameBuilder.User
         static void controller()
         {
             float deadzone = 0.3f;
-            sprayButton = ControllerInput.X;
+            sprayButton = ControllerInput.rightShoulder;
             jumpButton = !jumpLastFrame && ControllerInput.A;
             launchButton = !launchLastFrame && ControllerInput.Y;
 

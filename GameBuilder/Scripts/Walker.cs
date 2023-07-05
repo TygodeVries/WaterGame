@@ -63,8 +63,14 @@ namespace GameBuilder.Scripts
 
                     gameObject.scripts.Add(tongpupit);
 
-                    gameObject.posistion = this.gameObject.posistion + new Vector(16, 12);
+ //                   gameObject.scripts.Add(new Tong());
 
+                    if (!walkingLeft)
+                        gameObject.posistion = this.gameObject.posistion + new Vector(16, 12);
+                    else
+                    {
+                        gameObject.posistion = this.gameObject.posistion + new Vector(-48, 12);
+                    }
                     gameObject.inizilize();
 
                     LastTong = gameObject;

@@ -58,6 +58,7 @@ namespace GameBuilder.Game
         static void ChancedX()
         {
             Console.WriteLine("Checkpoint!");
+            Main.respawnPos = Main.playerController.gameObject.posistion.copy();
         }
     }
 }

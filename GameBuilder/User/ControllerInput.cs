@@ -100,7 +100,10 @@ namespace GameBuilder.User
                 A = (buttonFlags == GamepadButtonFlags.A);
                 X = (buttonFlags == GamepadButtonFlags.X);
                 Y = (buttonFlags == GamepadButtonFlags.Y);
-                Thread.Sleep(10);
+
+
+                rightShoulder = state.Gamepad.RightTrigger > 100;
+                Thread.Sleep((int)Math.Round(Time.DeltaTime));
             }
 
             Console.WriteLine("CONTROLLER DISCONNECTED!");
@@ -118,6 +121,8 @@ namespace GameBuilder.User
 
         public static float JoystickRightX;
         public static float JoystickRightY;
+
+        public static bool rightShoulder;
 
 
     }

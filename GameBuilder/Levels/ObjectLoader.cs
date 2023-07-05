@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
+using System.Xml.Linq;
 
 namespace GameBuilder.Levels
 {
@@ -117,6 +119,8 @@ namespace GameBuilder.Levels
             
             GameObject o = new GameObject();
 
+            Random rng = new Random();
+
             o.sprite = SpriteManager.loadSprite($"tileset\\{type}\\decorations\\1.png");
             o.posistion = new Vector(x * 16, y * 16);
 
@@ -156,6 +160,33 @@ namespace GameBuilder.Levels
             o.posistion = new Vector(x * 16, y * 16);
 
             o.inizilize();
+        }
+
+        public static void LoadFireAt(int x, int y)
+        {
+            GameObject fireObject = new GameObject();
+            fireObject.sprite = SpriteManager.loadSprite("generic\\fire.png");
+            fireObject.posistion = new Vector(x * 16, y * 16);
+
+
+            Collider collider = new Collider(new Vector(14, 7));
+            collider.offset = new Vector(1, 8);
+            collider.LiveUpdate = false;
+            collider.isTrigger = true;
+            fireObject.scripts.Add(collider);
+
+            fireObject.scripts.Add(new Waterable());
+
+            Fire fire = new Fire();
+            fire.target = fireObject;
+            fireObject.scripts.Add(fire);
+
+
+            fireObject.scripts.Add(new Spike());
+
+            fireObject.inizilize();
+
+            PhysicsEngine.AddCollider(collider, true);
         }
 
         public static void LoadWaterAt(int x, int y)

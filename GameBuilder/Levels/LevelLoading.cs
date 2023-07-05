@@ -146,6 +146,11 @@ namespace GameBuilder.Levels
                             continue;
                         }
 
+                        if(mapping._object == "fire")
+                        {
+                            ObjectLoader.LoadFireAt(x, y);
+                        }
+
                         if (mapping._object == "ground")
                         {
                             Color topColor = levelbitmap.GetPixel(x, y - 1);

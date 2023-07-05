@@ -84,6 +84,7 @@
     <Compile Include="Scripts\Spike.cs" />
     <Compile Include="Scripts\Spring.cs" />
     <Compile Include="Scripts\Text.cs" />
+    <Compile Include="Scripts\Tong.cs" />
     <Compile Include="Scripts\Tree.cs" />
     <Compile Include="Scripts\Walker.cs" />
     <Compile Include="Scripts\Waterable.cs" />

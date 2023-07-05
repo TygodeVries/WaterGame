@@ -16,6 +16,7 @@ namespace GameBuilder.Scripts
         public RigidBody rigidBody;
         public Pupit pupit;
         public bool invincible = false;
+
         public void Kill()
         {
             AudioPlayer.PlayAudioSource("dead.wav");
@@ -27,6 +28,11 @@ namespace GameBuilder.Scripts
         {
             rigidBody = (RigidBody)gameObject.getScript("RigidBody");
             rigidBody.Weight = 4;
+
+            if(Main.respawnPos != null)
+            {
+                gameObject.posistion = Main.respawnPos.copy();
+            }
         }
 
 
@@ -103,7 +109,8 @@ namespace GameBuilder.Scripts
 
 
                 direction.y *= 1.4f;
-                rigidBody.velocity += direction * 3;
+                rigidBody.velocity.x += direction.x * 3;
+                rigidBody.velocity.y = direction.y * 3;
 
                 ControllerInput.Rumble(60000, 60000, 0.2f);
             }
