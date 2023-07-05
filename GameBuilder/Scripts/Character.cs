@@ -32,6 +32,7 @@ namespace GameBuilder.Scripts
             dialogBox = new GameObject();
             dialogBox.posistion = this.gameObject.posistion + new _Math.Vector((-16 - 8) * 2, -16 * 3 * 2);
             dialogBox.sprite = SpriteManager.loadSprite("\\generic\\dialog_window.png");
+            dialogBox.layer = 2;
 
             dialogBox.scripts.Add(new Text(Text));
             dialogBox.inizilize();
