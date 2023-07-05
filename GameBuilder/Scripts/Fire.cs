@@ -12,18 +12,24 @@ namespace GameBuilder.Scripts
     {
         public GameObject target;
 
+        public Pupit pupit;
+
         public override void Start()
         {
             Waterable waterable = (Waterable) gameObject.getScript("Waterable");
+
+            pupit = (Pupit) gameObject.getScript("Pupit");
             waterable.Subscribe(onExtinguised);
         }
 
 
-        int hp = 1000;
+        int hp = 500;
 
         public void onExtinguised()
         {
             hp -= 1;
+
+            pupit.SetAnimationState(((int) hp / 100 + 1) + "");
 
             if (hp < 0)
             {
@@ -34,7 +40,7 @@ namespace GameBuilder.Scripts
 
         public override void Update()
         {
-            if (hp < 1000)
+            if (hp < 500)
             {
                 hp++;
             }

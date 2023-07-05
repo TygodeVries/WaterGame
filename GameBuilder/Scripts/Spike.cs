@@ -1,4 +1,5 @@
-﻿using GameBuilder.Levels;
+﻿using GameBuilder.Game;
+using GameBuilder.Levels;
 using GameBuilder.Physics;
 using System;
 using System.Collections.Generic;
@@ -34,8 +35,10 @@ namespace GameBuilder.Scripts
             {
                 if (!hasFired)
                 {
-                    PlayerController p = (PlayerController)PhysicsEngine.bodies[0].gameObject.getScript("PlayerController");
-                    p.Kill();
+                    PlayerController p = Main.playerController;
+                    
+                        p.Kill();
+                    
                 }
 
                 hasFired = true;

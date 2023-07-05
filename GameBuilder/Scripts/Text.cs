@@ -10,20 +10,9 @@ namespace GameBuilder.Scripts
     {
         public string text = "Sallamander Man";
 
-        public override void Start()
+        public Text(string text)
         {
-
-        }
-
-        public override void LateUpdate()
-        {
-
-
-        }
-
-        public override void Update()
-        {
-
+            this.text = text.Replace('_', ' ');
         }
     }
 }

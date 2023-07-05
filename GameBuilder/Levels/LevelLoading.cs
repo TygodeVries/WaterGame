@@ -169,6 +169,11 @@ namespace GameBuilder.Levels
                             ObjectLoader.LoadSpikeAt(x, y);
                         }
 
+                        if(mapping._object == "building")
+                        {
+                            ObjectLoader.LoadBuildingAt(x, y, mapping.options["type"]);
+                        }
+
                         if (mapping._object == "tree")
                         {
                             ObjectLoader.LoadTreeAt(x, y);
@@ -176,7 +181,7 @@ namespace GameBuilder.Levels
 
                         if (mapping._object == "enemy")
                         {
-                            ObjectLoader.spawnWalkerAt(x, y);
+                            ObjectLoader.LoadWalkerAt(x, y);
                         }
 
                         if(mapping._object == "water")
@@ -186,7 +191,21 @@ namespace GameBuilder.Levels
 
                         if (mapping._object == "npc")
                         {
-                            ObjectLoader.LoadNpcAt(x, y, mapping.options["version"]);
+                            ObjectLoader.LoadNpcAt(x, y, mapping.options["text"], mapping.options["type"]);
+                        }
+
+                        if (mapping._object == "vine")
+                        {
+                            Color bottemColor = levelbitmap.GetPixel(x, y + 1);
+
+                            if (bottemColor.A != 0)
+                            {
+                                ObjectLoader.LoadVineAt(x, y, false);
+                            }
+                            else
+                            {
+                                ObjectLoader.LoadVineAt(x, y, true);
+                            }
                         }
 
                         if (mapping._object == "coin")

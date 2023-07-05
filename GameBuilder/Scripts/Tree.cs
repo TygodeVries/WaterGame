@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GameBuilder.Levels;
+using GameBuilder.Rendering;
 
 namespace GameBuilder.Scripts
 {
@@ -30,7 +31,7 @@ namespace GameBuilder.Scripts
 
             if(wateringStage > 100)
             {
-                GameObject.Destroy(gameObject); 
+                gameObject.sprite = SpriteManager.loadSprite("generic\\tree.png");
             }    
         }
 

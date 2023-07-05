@@ -1,4 +1,5 @@
-﻿using GameBuilder.Levels;
+﻿using GameBuilder.Game;
+using GameBuilder.Levels;
 using GameBuilder.Physics;
 using GameBuilder.Rendering;
 using System;
@@ -20,14 +21,19 @@ namespace GameBuilder.Scripts
         public bool ShowDialog;
         public GameObject dialogBox;
 
+        public Character(string text)
+        {
+            Text = text;
+        }
+
         public override void Start()
         {
             collider = (Collider)gameObject.getScript("Collider");
             dialogBox = new GameObject();
-            dialogBox.posistion = this.gameObject.posistion + new _Math.Vector(-16 - 8, -16 * 3);
+            dialogBox.posistion = this.gameObject.posistion + new _Math.Vector((-16 - 8) * 2, -16 * 3 * 2);
             dialogBox.sprite = SpriteManager.loadSprite("\\generic\\dialog_window.png");
 
-            dialogBox.scripts.Add(new Text());
+            dialogBox.scripts.Add(new Text(Text));
             dialogBox.inizilize();
 
             collider.Subscribe(OnCollisionEnter);
@@ -52,6 +58,7 @@ namespace GameBuilder.Scripts
 
         public void OnCollisionEnter(GameObject collider)
         {
+            if(collider == Main.playerController.gameObject)
             ShowDialog = true;
         }
     }

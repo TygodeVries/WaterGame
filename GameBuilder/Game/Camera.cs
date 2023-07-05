@@ -1,8 +1,10 @@
-﻿using GameBuilder.Levels;
+﻿using GameBuilder._Math;
+using GameBuilder.Levels;
 using GameBuilder.Rendering;
 using GameBuilder.User;
 using System;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace GameBuilder.Game
 {
@@ -58,7 +60,9 @@ namespace GameBuilder.Game
         static void ChancedX()
         {
             Console.WriteLine("Checkpoint!");
-            Main.respawnPos = Main.playerController.gameObject.posistion.copy();
+            Vector rp = Main.playerController.gameObject.posistion.copy().Round() + new Vector(0, -8);
+            Main.respawnPos = rp;
+            Console.WriteLine(rp.x + ", " + rp.y);
         }
     }
 }

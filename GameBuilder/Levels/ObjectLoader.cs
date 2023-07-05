@@ -20,10 +20,9 @@ namespace GameBuilder.Levels
         {
             GameObject o = new GameObject();
             o.sprite = SpriteManager.loadSprite("generic\\coin.png");
-            o.renderingOffset = new Vector(0, -13);
             o.posistion = new Vector(x * 16, y * 16);
 
-            Collider collider = new Collider(new Vector(5, 5));
+            Collider collider = new Collider(new Vector(16, 16));
             collider.isTrigger = true;
 
             o.scripts.Add(collider);
@@ -33,18 +32,24 @@ namespace GameBuilder.Levels
             PhysicsEngine.AddCollider(collider, false);
         }
 
+        public static void LoadBuildingAt(int x, int y, string type)
+        {
+            GameObject o = new GameObject();
+            o.sprite = SpriteManager.loadSprite($"buildings\\{type}.png");
+            o.posistion = new Vector(x * 16, (y * 16) - 55 + 16);
+            o.inizilize();
+        }
+
         public static void LoadTreeAt(int x, int y)
         {
             GameObject o = new GameObject();
-            o.sprite = SpriteManager.loadSprite("generic\\coin.png");
+            o.sprite = SpriteManager.loadSprite("generic\\tree_dood.png");
             o.renderingOffset = new Vector(0, -13);
             o.posistion = new Vector(x * 16, y * 16);
 
-            Collider collider = new Collider(new Vector(16, 16));
-            collider.bottomLeft = o.posistion + new Vector(0, 16);
-            collider.topRight = o.posistion + new Vector(16, 0);
+            Collider collider = new Collider(new Vector(5, 64));
             collider.isTrigger = true;
-
+            collider.offset = new Vector(32, 0);
             o.scripts.Add(collider);
             o.scripts.Add(new Waterable());
             o.scripts.Add(new Tree());
@@ -52,11 +57,24 @@ namespace GameBuilder.Levels
 
             PhysicsEngine.AddCollider(collider, false);
         }
-
-        public static void LoadNpcAt(int x, int y, string version)
+        public static void LoadVineAt(int x, int y, bool lastOne)
         {
             GameObject o = new GameObject();
-            o.sprite = SpriteManager.loadSprite("npc\\krokodil.png");
+            if(!lastOne) o.sprite = SpriteManager.loadSprite("decoration\\vine.png");
+            else o.sprite = SpriteManager.loadSprite("decoration\\vine_end.png");
+            o.posistion = new Vector(x * 16, y * 16);
+
+            o.scripts.Add(new WindEffected());
+
+            o.inizilize();
+        }
+        public static void LoadNpcAt(int x, int y, string text, string type)
+        {
+            GameObject o = new GameObject();
+            if(type == "salamanderman")
+                o.sprite = SpriteManager.loadSprite("npc\\krokodil.png");
+            if(type == "andereman")
+                o.sprite = SpriteManager.loadSprite("npc\\drup.png");
             o.renderingOffset = new Vector(0, -13);
             o.posistion = new Vector(x * 16, y * 16);
 
@@ -66,7 +84,7 @@ namespace GameBuilder.Levels
             collider.isTrigger = true;
 
             o.scripts.Add(collider);
-            o.scripts.Add(new Character());
+            o.scripts.Add(new Character(text));
             o.inizilize();
 
             PhysicsEngine.AddCollider(collider, false);
@@ -77,9 +95,8 @@ namespace GameBuilder.Levels
             o.sprite = SpriteManager.loadSprite("generic\\spike.png");
             o.posistion = new Vector(x * 16, y * 16);
 
-            Collider collider = new Collider(new Vector(16, 16));
-            collider.bottomLeft = o.posistion + new Vector(1, 4);
-            collider.topRight = o.posistion + new Vector(13, 0);
+            Collider collider = new Collider(new Vector(16, 1));
+            collider.offset = new Vector(0, 15);
             collider.isTrigger = true;
 
             o.scripts.Add(collider);
@@ -106,7 +123,6 @@ namespace GameBuilder.Levels
 
             PhysicsEngine.AddCollider(collider, false);
         }
-
         public static void LoadDecortationAt(int x, int y, string type)
         {
             if (Math.Cos(x / 2f) > 0)
@@ -122,11 +138,11 @@ namespace GameBuilder.Levels
             Random rng = new Random();
 
             o.sprite = SpriteManager.loadSprite($"tileset\\{type}\\decorations\\1.png");
+            o.scripts.Add(new WindEffected());
             o.posistion = new Vector(x * 16, y * 16);
-
+            
             o.inizilize();
         }
-
         public static void LoadGroundAt(int x, int y, string type, bool topOpen)
         {
             GameObject o = new GameObject();
@@ -139,6 +155,7 @@ namespace GameBuilder.Levels
             {
                 o.sprite = SpriteManager.loadSprite($"tileset\\{type}\\fill.png");
             }
+
             o.posistion = new Vector(x * 16, y * 16);
 
             Collider collider = new Collider(new Vector(16, 16));
@@ -150,7 +167,6 @@ namespace GameBuilder.Levels
 
             PhysicsEngine.AddCollider(collider, false);
         }
-
         public static void LoadFillerAt(int x, int y, string type)
         { 
 
@@ -161,12 +177,12 @@ namespace GameBuilder.Levels
 
             o.inizilize();
         }
-
         public static void LoadFireAt(int x, int y)
         {
             GameObject fireObject = new GameObject();
-            fireObject.sprite = SpriteManager.loadSprite("generic\\fire.png");
             fireObject.posistion = new Vector(x * 16, y * 16);
+
+            fireObject.renderingOffset = new Vector(0, -8);
 
 
             Collider collider = new Collider(new Vector(14, 7));
@@ -176,6 +192,10 @@ namespace GameBuilder.Levels
             fireObject.scripts.Add(collider);
 
             fireObject.scripts.Add(new Waterable());
+
+            Pupit pupit = new Pupit();
+            pupit.ContentRoot = "fire";
+            fireObject.scripts.Add(pupit);
 
             Fire fire = new Fire();
             fire.target = fireObject;
@@ -188,7 +208,6 @@ namespace GameBuilder.Levels
 
             PhysicsEngine.AddCollider(collider, true);
         }
-
         public static void LoadWaterAt(int x, int y)
         {
             GameObject o = new GameObject();
@@ -196,10 +215,9 @@ namespace GameBuilder.Levels
 
             o.posistion = new Vector(x * 16, y * 16);
 
-            o.inizilize();
+            o.inizilize();  
         }
-
-        public static void spawnWalkerAt(int x, int y)
+        public static void LoadWalkerAt(int x, int y)
         {
             GameObject gobject = new GameObject();
             gobject.name = "walker";
@@ -218,40 +236,27 @@ namespace GameBuilder.Levels
 
             gobject.scripts.Add(new Walker());
 
-            gobject.inizilize();
-
-            pupit.SetAnimationState("walk_left");
-
             //
-
-            GameObject fireObject = new GameObject();
-            fireObject.sprite = SpriteManager.loadSprite("generic\\fire.png");
-            fireObject.posistion = new Vector(10, 10);
 
 
             Collider collider = new Collider(new Vector(14, 7));
             collider.offset = new Vector(1, 8);
             collider.LiveUpdate = true;
             collider.isTrigger = true;
-            fireObject.scripts.Add(collider);
+            gobject.scripts.Add(collider);
 
             body.collider = collider;
 
-            fireObject.scripts.Add(new Waterable());
-            
-            Fire fire = new Fire();
-            fire.target = gobject;
-            fireObject.scripts.Add(fire);
+            gobject.scripts.Add(new Waterable());
 
+            gobject.scripts.Add(new Spike());
 
-            fireObject.scripts.Add(new Spike());
-
-            fireObject.inizilize();
+            gobject.inizilize();
 
             PhysicsEngine.AddCollider(collider, true);
+            pupit.SetAnimationState("walk_left");
 
         }
-
         public static void LoadPlayerAt(int x, int y)
         {
             Console.WriteLine("Loaded player at " + x + ", " + y);
@@ -286,6 +291,5 @@ namespace GameBuilder.Levels
             // Inizilize gameobject to renderEngine.
             gobject.inizilize();
         }
-
     }
 }

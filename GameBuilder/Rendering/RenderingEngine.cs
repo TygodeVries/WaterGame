@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
 using System.Runtime.InteropServices.ComTypes;
+using System.Windows.Forms;
 
 namespace GameBuilder.Rendering
 {
@@ -30,10 +31,12 @@ namespace GameBuilder.Rendering
         {
             Debug.SendDebugMessage($"Set game size to {X * 16}, {Y * 16}");
             drawBrush = new SolidBrush(Color.Black);
-            drawFont = new Font("Raster Fonts", 6);
+            drawFont = new Font("Arial Narrow", 7);
         }
         static void RenderLayer(int i, Graphics graphics16)
         {
+            graphics16.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+
             try
             {
                 foreach (GameObject gameObject in CurrentLoadedLevel.Objects)
@@ -60,7 +63,10 @@ namespace GameBuilder.Rendering
                     Text text = (Text)gameObject.getScript("Text");
                     if (text != null)
                     {
-                        graphics16.DrawString(text.text, drawFont, drawBrush, new Rectangle((int)WorldPointToScreen(gameObject.posistion).x, (int)WorldPointToScreen(gameObject.posistion).y, 64, 32));
+                        TextRenderer.DrawText(graphics16, text.text, drawFont, new Rectangle((int)WorldPointToScreen(gameObject.posistion).x, (int)WorldPointToScreen(gameObject.posistion).y, 64 * 2, (32 * 2) + 16), Color.Black, Color.Empty,
+                      TextFormatFlags.HorizontalCenter |
+                      TextFormatFlags.TextBoxControl |
+                      TextFormatFlags.WordBreak);
                     }
                 }
             } catch(Exception e)

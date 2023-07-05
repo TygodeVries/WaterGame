@@ -31,8 +31,12 @@ namespace GameBuilder.Scripts
                 if (newState == AnimationState) return;
 
                 AnimationState = newState;
-                CurrentFrameIndex = 0;
-                TimeSinceLastSpriteChance = 0;
+
+                if (ContentRoot != "fire")
+                {
+                    CurrentFrameIndex = 0;
+                    TimeSinceLastSpriteChance = 0;
+                }
                 CurrentFrames = AnimationTypesToSprite[newState];
 
                 if (CurrentFrames == null)

@@ -36,6 +36,8 @@ namespace GameBuilder._Math
             FPS = (int)(1000 / (float)now.Subtract(LastTick).TotalMilliseconds);
 
             LastTick = DateTime.Now;
+
+            if (DeltaTime > 0.1f) DeltaTime = 0.1f;
         }
     }
 }

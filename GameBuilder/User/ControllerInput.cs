@@ -103,7 +103,7 @@ namespace GameBuilder.User
 
 
                 rightShoulder = state.Gamepad.RightTrigger > 100;
-                Thread.Sleep((int)Math.Round(Time.DeltaTime));
+                Thread.Sleep((int) 16);
             }
 
             Console.WriteLine("CONTROLLER DISCONNECTED!");
